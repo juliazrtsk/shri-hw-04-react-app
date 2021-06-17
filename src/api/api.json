@@ -1,0 +1,269 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "CI Server API",
+    "description": "SHRI 2021 CI server API",
+    "contact": {
+      "email": "julia.zrtsk@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Settings",
+      "description": "Repository configuration"
+    },
+    {
+      "name": "Builds",
+      "description": "Operations for working with builds"
+    }
+  ],
+  "paths": {
+    "/settings": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "gets current repository settings",
+        "operationId": "Get",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SettingsGetApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "updates repository settings",
+        "operationId": "Post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SettingsPostApiRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "settings saved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SettingsPostApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid input, object invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server is unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SettingsModel": {
+        "required": [
+          "id",
+          "buildCommand",
+          "mainBranch",
+          "period",
+          "repoName"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "repoName": {
+            "type": "string"
+          },
+          "buildCommand": {
+            "type": "string"
+          },
+          "mainBranch": {
+            "type": "string"
+          },
+          "period": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "BuildModel": {
+        "required": [
+          "authorName",
+          "branchName",
+          "buildNumber",
+          "commitHash",
+          "commitMessage",
+          "configurationId",
+          "id",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "configurationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "buildNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "commitMessage": {
+            "type": "string"
+          },
+          "commitHash": {
+            "type": "string"
+          },
+          "branchName": {
+            "type": "string"
+          },
+          "authorName": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BuildStatusModel"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "BuildStatusModel": {
+        "enum": [
+          "Waiting",
+          "InProgress",
+          "Success",
+          "Fail",
+          "Canceled"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "BuildStatus",
+          "modelAsString": true
+        }
+      },
+      "CancelBuildInput": {
+        "required": [
+          "buildId"
+        ],
+        "type": "object",
+        "properties": {
+          "buildId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "SettingsGetApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/SettingsModel"
+          }
+        }
+      },
+      "SettingsPostApiRequest": {
+        "required": [
+          "buildCommand",
+          "mainBranch",
+          "period",
+          "repoName"
+        ],
+        "type": "object",
+        "properties": {
+          "repoName": {
+            "type": "string"
+          },
+          "buildCommand": {
+            "type": "string"
+          },
+          "mainBranch": {
+            "type": "string"
+          },
+          "period": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SettingsPostApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/SettingsModel"
+          }
+        }
+      },
+      "ErrorApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "success": false,
+          "message": "Some error explanation"
+        }
+      }
+    }
+  }
+}
