@@ -1,0 +1,25 @@
+:root {
+  --color-bg-action: #ffcc00;
+  --color-bg-action-hovered: #f2c200;
+  --color-bg-control: #e6e6e6;
+  --color-bg-control-hovered: #dbdbdb;
+  --color-bg-disabled: #f2f2f2;
+  --color-bg-base: #fff;
+  --color-bg-base-dark: #f0f2f3;
+  --color-bg-heavy: #d9d9d9;
+
+  --color-border-action-focused: #b38f00;
+  --color-border-control-focused: #b3b3b3;
+
+  --color-accent-required: #ff3333;
+  --color-accent-error: #ff3333;
+  --color-accent-pending: #ff9a00;
+  --color-accent-correct: #00b341;
+
+  --color-text-primary: #000;
+  --color-text-secondary: #7f8285;
+  --color-text-disabled: #7f7f7f;
+
+  --color-link: #7f8285;
+  --color-link-hovered: #e00000;
+}
