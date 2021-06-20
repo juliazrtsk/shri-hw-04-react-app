@@ -40,3 +40,19 @@ $ npm run eject
 - prop-types
 - classnames
 - link-module-alias
+
+## Структура проекта
+
+Node.js: **v16.3.0**
+
+```
+src
+├── public                  # Static files
+├── api                     # Api description and mock json-s
+├── components              # React atom components
+├── localization            # Config with keys for future localization
+├── pages                   # React pages components
+├── _variables.css          # CSS variables
+├── index.css               # Common project styles
+└── index.js                # Entry point
+```
