@@ -16,5 +16,6 @@ module.exports = {
   },
   rules: {
     'react/no-array-index-key': 'warn',
+    'no-unused-vars': 'warn',
   },
 };
