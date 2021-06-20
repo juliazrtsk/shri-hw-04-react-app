@@ -1,0 +1,9 @@
+.label {
+  color: var(--color-text-primary);
+}
+
+.label_required::after {
+  content: '*';
+  color: var(--color-accent-required);
+  margin-left: 2px;
+}
