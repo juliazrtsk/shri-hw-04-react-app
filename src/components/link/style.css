@@ -1,0 +1,17 @@
+.link {
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  line-height: 18px;
+  text-decoration: none;
+
+  transition: color 0.15s ease-out;
+}
+
+.link:hover {
+  color: var(--color-link-hovered);
+}
+
+.link:focus {
+  color: var(--color-link-hovered);
+  outline: none;
+}
