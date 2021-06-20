@@ -1,0 +1,9 @@
+.meta {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.meta > :first-child {
+  margin-right: 5px;
+}
