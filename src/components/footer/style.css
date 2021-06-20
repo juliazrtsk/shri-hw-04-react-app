@@ -1,0 +1,20 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 100px;
+  height: 32px;
+  background-color: var(--color-bg-base-dark);
+}
+
+.footer__links {
+  display: flex;
+}
+
+.footer__links > * {
+  margin-left: 12px;
+}
+
+.footer__links > :first-child {
+  margin-left: 0;
+}
