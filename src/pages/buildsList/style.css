@@ -1,0 +1,8 @@
+.builds-list {
+  margin: 8px 0 20px;
+}
+
+.builds-list__build {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
