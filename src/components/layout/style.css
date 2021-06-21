@@ -1,0 +1,14 @@
+.layout {
+  height: 100vh;
+  display: grid;
+  grid-template: 48px auto 32px / 100px auto 100px;
+}
+
+.layout .header,
+.layout .footer {
+  grid-column: 1 / -1;
+}
+
+.layout__content {
+  grid-column: 2;
+}
