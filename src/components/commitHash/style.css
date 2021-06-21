@@ -1,0 +1,17 @@
+.commit-hash {
+  display: inline-block;
+  max-width: 90px;
+  color: var(--color-text-secondary);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.commit-hash:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.commit-hash_expanded {
+  max-width: unset;
+}
