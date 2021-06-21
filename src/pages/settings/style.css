@@ -1,0 +1,50 @@
+.settings {
+  margin-top: 8px;
+  width: 474px;
+  font-size: 13px;
+}
+
+.settings__description {
+  margin: 8px 0 0;
+}
+
+.settings__form {
+  margin-top: 25px;
+}
+
+.settings__field {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.settings__field .label {
+  margin-bottom: 9px;
+}
+
+.settings__field .input {
+  margin-bottom: 18px;
+}
+
+.settings__field_type_interval {
+  flex-direction: row;
+  align-items: center;
+}
+
+.settings__field_type_interval .label {
+  margin: 0;
+}
+
+.settings__field_type_interval .input {
+  margin: 0 10px 0;
+  width: 52px;
+  text-align: right;
+}
+
+.settings__controls {
+  margin-top: 25px;
+}
+
+.settings__controls > :first-child {
+  margin-right: 8px;
+}
