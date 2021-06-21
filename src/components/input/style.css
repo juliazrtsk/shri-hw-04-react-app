@@ -1,0 +1,24 @@
+.input {
+  box-sizing: border-box;
+  padding: 0 13px;
+  height: 36px;
+  background-color: var(--color-bg-base);
+  border: 2px solid var(--color-bg-base-dark);
+  border-radius: 4px;
+  outline: none;
+
+  line-height: 15px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-text-primary);
+
+  transition: border 0.2s;
+}
+
+.input:focus {
+  border-color: var(--color-border-control-focused);
+}
+
+.input::placeholder {
+  opacity: 0.2;
+}
