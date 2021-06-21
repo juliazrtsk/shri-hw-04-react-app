@@ -7,6 +7,7 @@
   "private": true,
   "dependencies": {
     "classnames": "^2.3.1",
+    "dayjs": "^1.10.5",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -35,7 +36,8 @@
     "api": "./src/api",
     "components": "./src/components",
     "pages": "./src/pages",
-    "l10n": "./src/localization"
+    "l10n": "./src/localization",
+    "utils": "./src/utils"
   },
   "eslintConfig": {
     "extends": [
