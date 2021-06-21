@@ -27,6 +27,17 @@
     url('//yastatic.net/s3/home/fonts/ys/1/text-bold.woff') format('woff');
 }
 
+@font-face {
+  font-family: 'Hack';
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  src: url('https://cdnjs.cloudflare.com/ajax/libs/hack-font/3.3.0/web/fonts/hack-regular.woff')
+      format('woff'),
+    url('https://cdnjs.cloudflare.com/ajax/libs/hack-font/3.3.0/web/fonts/hack-regular.woff2')
+      format('woff2');
+}
+
 body {
   margin: 0;
   height: 100vh;
