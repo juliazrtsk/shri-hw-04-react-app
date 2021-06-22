@@ -6,6 +6,7 @@
 
 .settings__description {
   margin: 8px 0 0;
+  color: var(--color-text-secondary);
 }
 
 .settings__form {
