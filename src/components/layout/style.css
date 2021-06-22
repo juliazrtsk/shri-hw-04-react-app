@@ -13,6 +13,18 @@
   color: var(--color-text-secondary);
 }
 
+.layout__controls {
+  display: flex;
+}
+
+.layout__controls > * {
+  margin-right: 8px;
+}
+
+.layout__controls > :last-child {
+  margin-right: 0;
+}
+
 .layout__content {
   grid-column: 2;
 }
@@ -26,5 +38,9 @@
 @media screen and (max-width: 480px) {
   .layout {
     grid-template: 48px auto 68px / 16px auto 16px;
+  }
+
+  .header .action-button__text {
+    display: none;
   }
 }
