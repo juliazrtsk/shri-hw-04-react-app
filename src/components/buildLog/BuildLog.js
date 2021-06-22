@@ -16,6 +16,7 @@ const BuildLog = ({ log, className }) => {
         color: 'unset',
         background: '#f2f2f2',
         fontSize: '11px',
+        boxSizing: 'border-box',
       }}
       codeTagProps={{ style: { fontFamily: 'Hack, monospace' } }}
     >

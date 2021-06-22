@@ -18,7 +18,7 @@ const BuildDetails = () => {
   return (
     <article className="build-details">
       <Build {...build} view="expanded" />
-      <BuildLog log={log} />
+      <BuildLog className="build-details__log" log={log} />
     </article>
   );
 };
