@@ -1,4 +1,12 @@
 .build {
+  --build-grid-template-columns-expanded: [icon-start] 22px [icon-end
+    commit-start] auto [commit-end];
+  --build-grid-template-rows-expanded: [status-start] auto [status-end
+    commit-meta-start] auto [commit-meta-end date-time-meta-start] auto
+    [date-time-meta-end];
+}
+
+.build {
   display: grid;
   grid-template-columns: [icon-start] 22px [icon-end commit-start] auto [commit-end date-time-start] 120px [date-time-end];
   grid-template-rows: [status-start] auto [status-end meta-start] auto [meta-end];
@@ -60,14 +68,14 @@
   grid-row: meta-start / meta-end;
   display: flex;
   align-items: center;
+  word-wrap: break-word;
 }
 
 .build__commit-meta > *,
 .build__date-time-meta > * {
-  margin-right: 5px;
+  margin-right: 10px;
 }
 
-/*todo fix*/
 .build__date > .icon,
 .build__duration > .icon,
 .build__commit-meta .icon {
@@ -76,13 +84,8 @@
 
 /* Styles for expanded view */
 .build_view_expanded .build {
-  grid-template-columns:
-    [icon-start] 22px
-    [icon-end commit-start] auto [commit-end];
-  grid-template-rows:
-    [status-start] auto
-    [status-end commit-meta-start] auto
-    [commit-meta-end date-time-meta-start] auto [date-time-meta-end];
+  grid-template-columns: var(--build-grid-template-columns-expanded);
+  grid-template-rows: var(--build-grid-template-rows-expanded);
 }
 
 .build_view_expanded .build__commit-meta {
@@ -100,4 +103,38 @@
   flex-direction: row;
   padding-top: 8px;
   border-top: 1px solid var(--color-bg-base-dark);
+}
+
+@media screen and (max-width: 767px) {
+  .build__commit-meta {
+    grid-column: commit-start / -1;
+    grid-row: 2;
+
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .build__commit-meta > :last-child {
+    width: 100%;
+    margin-top: 8px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .build {
+    grid-template-columns: var(--build-grid-template-columns-expanded);
+    grid-template-rows: var(--build-grid-template-rows-expanded);
+  }
+
+  .build__date-time-meta > :first-child {
+    margin-bottom: 0;
+  }
+
+  .build__date-time-meta {
+    grid-column: commit-start / commit-end;
+    grid-row: 3;
+    flex-direction: row;
+    padding-top: 8px;
+    border-top: 1px solid var(--color-bg-base-dark);
+  }
 }

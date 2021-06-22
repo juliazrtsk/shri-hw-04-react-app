@@ -106,7 +106,7 @@ module.exports = {
       configurationId: 'f44f0c82-205d-4b2f-a3c9-55a3b8c9f520',
       buildNumber: 1,
       commitMessage: 'Updated readme',
-      commitHash: '0b297a55800f1ee7cc27ed7753c1420fa2e8fb0a',
+      commitHash: '0b297a5',
       branchName: 'master',
       authorName: 'juliazrtsk',
       status: 'Success',

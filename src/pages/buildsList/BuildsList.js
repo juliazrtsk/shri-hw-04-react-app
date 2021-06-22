@@ -33,7 +33,9 @@ const BuildsList = ({ className }) => {
   return (
     <div className={cn('builds-list', className)}>
       {renderedBuilds}
-      <Button color="secondary">Show more</Button>
+      <Button className="builds-list__more-button" color="secondary">
+        Show more
+      </Button>
     </div>
   );
 };

@@ -6,3 +6,9 @@
   margin-bottom: 10px;
   cursor: pointer;
 }
+
+@media screen and (max-width: 480px) {
+  .builds-list__more-button {
+    width: 100%;
+  }
+}
