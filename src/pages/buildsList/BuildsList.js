@@ -4,9 +4,9 @@ import cn from 'classnames';
 import { useHistory } from 'react-router-dom';
 
 import { builds } from 'api/buildsList';
-
 import Build from 'components/build/Build';
 import Button from 'components/button/Button';
+import routes from 'src/routes';
 
 import './style.css';
 
@@ -14,7 +14,7 @@ const BuildsList = ({ className }) => {
   const history = useHistory();
 
   const onBuildClick = useCallback((build) => {
-    history.push(`/build/${build}`);
+    history.push(`${routes.build}/${build}`);
   }, []);
 
   const renderedBuilds = useMemo(
