@@ -5,8 +5,9 @@ import { useHistory } from 'react-router-dom';
 
 import { builds } from 'api/buildsList';
 import Build from 'components/build/Build';
-import Button from 'components/button/Button';
+import ActionButton from 'components/actionButton/ActionButton';
 import routes from 'src/routes';
+import l10n from 'l10n/config';
 
 import './style.css';
 
@@ -33,9 +34,9 @@ const BuildsList = ({ className }) => {
   return (
     <div className={cn('builds-list', className)}>
       {renderedBuilds}
-      <Button className="builds-list__more-button" color="secondary">
-        Show more
-      </Button>
+      <ActionButton className="builds-list__more-button" color="secondary">
+        {l10n.buildsList_controls_showMore}
+      </ActionButton>
     </div>
   );
 };

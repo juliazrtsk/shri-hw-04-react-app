@@ -18,4 +18,5 @@ module.exports = {
   settings_form_interval_placeholder: '10',
   settings_controls_save: 'Save',
   settings_controls_cancel: 'Cancel',
+  buildsList_controls_showMore: 'Show more',
 };
