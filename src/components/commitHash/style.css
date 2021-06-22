@@ -15,3 +15,12 @@
 .commit-hash_expanded {
   max-width: unset;
 }
+
+.commit-hash_short {
+  text-overflow: unset;
+}
+
+.commit-hash_short:hover {
+  cursor: default;
+  text-decoration: none;
+}

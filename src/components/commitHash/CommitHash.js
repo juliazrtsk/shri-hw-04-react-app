@@ -19,6 +19,7 @@ const CommitHash = ({ hash }) => {
     <div
       className={cn('commit-hash', {
         'commit-hash_expanded': expanded,
+        'commit-hash_short': hash.length <= 10,
       })}
       onClick={onClick}
     >
