@@ -65,7 +65,6 @@ src
   На мой взгляд, это помогает не перегружать карточку с информацией о сборке (но я уберу, если это неуместное добавление).
 
 - WIP:
-  - adaptive version
-  - clearable input
   - modal window
+  - clearable input
   - saving repository setting to context
