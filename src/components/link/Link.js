@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link as RouterLink } from 'react-router-dom';
 
 import './style.css';
 
 const Link = ({ url, children }) => {
   return (
-    <a className="link" href={url}>
+    <RouterLink className="link" to={url}>
       {children}
-    </a>
+    </RouterLink>
   );
 };
 
