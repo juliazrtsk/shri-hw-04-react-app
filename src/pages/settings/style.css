@@ -1,7 +1,8 @@
 .settings {
   margin-top: 8px;
-  width: 474px;
+  max-width: 474px;
   font-size: 13px;
+  padding-bottom: 50px;
 }
 
 .settings__description {
@@ -48,4 +49,20 @@
 
 .settings__controls > :first-child {
   margin-right: 8px;
+}
+
+@media screen and (max-width: 480px) {
+  .settings {
+    width: 100%;
+    padding-bottom: 20px;
+  }
+
+  .settings__controls {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .settings__controls > :first-child {
+    margin: 0 0 12px;
+  }
 }

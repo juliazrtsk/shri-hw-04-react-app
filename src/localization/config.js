@@ -6,7 +6,7 @@ module.exports = {
   layout_footer_author: 'Julia Zaretskaya',
   settings_title: 'Settings',
   settings_description:
-    'Configure repository connection and synchronization settings.',
+    'Configure repository connection and synchronization settings.',
   settings_form_repo_label: 'GitHub repository',
   settings_form_repo_placeholder: 'github.com/user-name/repo-name.git',
   settings_form_build_label: 'Build command',
