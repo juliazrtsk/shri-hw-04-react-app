@@ -9,6 +9,10 @@
   grid-column: 1 / -1;
 }
 
+.layout__title {
+  color: var(--color-text-secondary);
+}
+
 .layout__content {
   grid-column: 2;
 }

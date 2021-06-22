@@ -4,13 +4,6 @@
   padding: 0 100px;
 }
 
-.header__title {
-  color: var(--color-text-secondary);
-}
-
-.header__controls {
-}
-
 @media screen and (max-width: 767px) {
   .header {
     padding: 0 50px;

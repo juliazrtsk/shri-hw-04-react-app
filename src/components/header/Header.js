@@ -1,20 +1,18 @@
 import React from 'react';
-
-import Title from 'components/title/Title';
-import l10n from 'l10n/config';
+import PropTypes from 'prop-types';
 
 import './style.css';
 
-const Header = () => {
-  return (
-    <header className="header">
-      <Title className="header__title">{l10n.layout_header_title}</Title>
-    </header>
-  );
+const Header = ({ children }) => {
+  return <header className="header">{children}</header>;
 };
 
-Header.propTypes = {};
+Header.propTypes = {
+  children: PropTypes.node,
+};
 
-Header.defaultProps = {};
+Header.defaultProps = {
+  children: '',
+};
 
 export default Header;
