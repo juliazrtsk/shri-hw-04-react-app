@@ -3,7 +3,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 100px;
-  height: 32px;
+  height: 100%;
+  box-sizing: border-box;
   background-color: var(--color-bg-base-dark);
 }
 
@@ -17,4 +18,23 @@
 
 .footer__links > :first-child {
   margin-left: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .footer {
+    padding: 0 50px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 16px;
+  }
+
+  .footer__links {
+    margin-bottom: 8px;
+  }
 }

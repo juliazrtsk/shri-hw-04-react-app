@@ -10,3 +10,15 @@
 
 .header__controls {
 }
+
+@media screen and (max-width: 767px) {
+  .header {
+    padding: 0 50px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    padding: 0 16px;
+  }
+}

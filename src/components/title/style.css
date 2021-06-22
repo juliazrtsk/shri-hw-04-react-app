@@ -19,3 +19,9 @@
   font-weight: 700;
   line-height: 20px;
 }
+
+@media screen and (max-width: 480px) {
+  .title_level_1 {
+    font-size: 18px;
+  }
+}

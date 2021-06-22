@@ -12,3 +12,15 @@
 .layout__content {
   grid-column: 2;
 }
+
+@media screen and (max-width: 767px) {
+  .layout {
+    grid-template-columns: 50px auto 50px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .layout {
+    grid-template: 48px auto 68px / 16px auto 16px;
+  }
+}
