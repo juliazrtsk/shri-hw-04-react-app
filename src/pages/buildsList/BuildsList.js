@@ -1,24 +1,32 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 import { useHistory } from 'react-router-dom';
 
-import { builds } from 'api/buildsList';
 import Build from 'components/build/Build';
 import ActionButton from 'components/actionButton/ActionButton';
 import { paths } from 'router';
 import l10n from 'l10n/config';
 
+import { buildsListSelector } from 'store/buildsSlice';
+
 import './style.css';
 
-const BuildsList = ({ className }) => {
+const BuildsList = ({ className, loadData }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const builds = useSelector(buildsListSelector);
+
+  useEffect(() => {
+    dispatch(loadData());
+  }, [loadData, dispatch]);
 
   const onBuildClick = useCallback((id) => {
     history.push(paths.build.replace(/:buildId/g, id));
   }, []);
 
-  const renderedBuilds = useMemo(
+  const renderBuilds = useCallback(
     () =>
       builds.map((build) => (
         <Build
@@ -33,7 +41,7 @@ const BuildsList = ({ className }) => {
 
   return (
     <div className={cn('builds-list', className)}>
-      {renderedBuilds}
+      {builds && renderBuilds()}
       <ActionButton className="builds-list__more-button" color="secondary">
         {l10n.buildsList_controls_showMore}
       </ActionButton>
@@ -43,10 +51,12 @@ const BuildsList = ({ className }) => {
 
 BuildsList.propTypes = {
   className: PropTypes.string,
+  loadData: PropTypes.func,
 };
 
 BuildsList.defaultProps = {
   className: '',
+  loadData: () => {},
 };
 
 export default BuildsList;
