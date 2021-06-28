@@ -24,7 +24,7 @@ ReactDOM.render(
           <Switch>
             {routes.map((route) => (
               <Route path={route.path} key={route.path}>
-                <route.component />
+                <route.component loadData={route.loadData} />
               </Route>
             ))}
             <Redirect to={paths.home} />
