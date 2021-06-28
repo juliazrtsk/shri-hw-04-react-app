@@ -39,6 +39,7 @@
     "components": "./src/components",
     "pages": "./src/pages",
     "l10n": "./src/localization",
+    "router": "./src/router",
     "utils": "./src/utils"
   },
   "eslintConfig": {

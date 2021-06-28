@@ -7,7 +7,7 @@ import Label from 'components/label/Label';
 import Input from 'components/input/Input';
 import Button from 'components/button/Button';
 import l10n from 'l10n/config';
-import routes from 'src/routes';
+import { paths } from 'router';
 
 import './style.css';
 
@@ -40,11 +40,11 @@ const Settings = () => {
 
   const onSubmit = useCallback((e) => {
     e.preventDefault();
-    history.push(routes.home);
+    history.push(paths.home);
   }, []);
 
   const onCancel = useCallback(() => {
-    history.push(routes.home);
+    history.push(paths.home);
   }, []);
 
   const formFields = [

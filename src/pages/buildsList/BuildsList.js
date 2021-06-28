@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { builds } from 'api/buildsList';
 import Build from 'components/build/Build';
 import ActionButton from 'components/actionButton/ActionButton';
-import routes from 'src/routes';
+import { paths } from 'router';
 import l10n from 'l10n/config';
 
 import './style.css';
@@ -14,8 +14,8 @@ import './style.css';
 const BuildsList = ({ className }) => {
   const history = useHistory();
 
-  const onBuildClick = useCallback((build) => {
-    history.push(`${routes.build}/${build}`);
+  const onBuildClick = useCallback((id) => {
+    history.push(paths.build.replace(/:buildId/g, id));
   }, []);
 
   const renderedBuilds = useMemo(

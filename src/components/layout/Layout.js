@@ -7,7 +7,7 @@ import Title from 'components/title/Title';
 import ActionButton from 'components/actionButton/ActionButton';
 import Footer from 'components/footer/Footer';
 import l10n from 'l10n/config';
-import routes from 'src/routes';
+import { matchLocationToPath, paths } from 'router';
 
 import './style.css';
 
@@ -20,21 +20,19 @@ const Layout = ({ children }) => {
   }, []);
 
   const controls = {
-    [routes.home]: [
+    [paths.home]: [
       { type: 'play', text: 'Run build', onClick: () => {} },
-      { type: 'settings', onClick: () => redirect(routes.settings) },
+      { type: 'settings', onClick: () => redirect(paths.settings) },
     ],
-    [routes.settings]: [],
-    [routes.build]: [
+    [paths.settings]: [],
+    [paths.build]: [
       { type: 'restart', text: 'Rebuild', onClick: () => {} },
-      { type: 'settings', onClick: () => redirect(routes.settings) },
+      { type: 'settings', onClick: () => redirect(paths.settings) },
     ],
   };
 
-  let path = location.pathname;
-  if (path.includes(routes.build)) {
-    path = routes.build;
-  }
+  const match = matchLocationToPath(location.pathname);
+  const path = match ? match.path : paths.home;
 
   const renderControls = () =>
     controls[path].map(({ type, text, onClick }) => (
