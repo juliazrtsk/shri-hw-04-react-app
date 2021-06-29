@@ -9,7 +9,7 @@ class Api {
     return response.data;
   }
 
-  async post(path, params, data) {
+  async post(path, data, params) {
     let url = API + path;
     const response = await axios.post(url, data, { params });
     return response.data;
