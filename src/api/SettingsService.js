@@ -7,7 +7,7 @@ export default class SettingsService {
     return this.api.get('/settings');
   }
 
-  createSettings(settings) {
+  updateSettings(settings) {
     return this.api.post('/settings', settings);
   }
 }
