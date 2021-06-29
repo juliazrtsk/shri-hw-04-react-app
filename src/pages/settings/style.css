@@ -28,16 +28,16 @@
   margin-bottom: 18px;
 }
 
-.settings__field_type_interval {
+.settings__field_type_period {
   flex-direction: row;
   align-items: center;
 }
 
-.settings__field_type_interval .label {
+.settings__field_type_period .label {
   margin: 0;
 }
 
-.settings__field_type_interval .input {
+.settings__field_type_period .input {
   margin: 0 10px 0;
   width: 52px;
   text-align: right;

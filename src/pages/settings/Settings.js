@@ -1,6 +1,8 @@
 import React, { useReducer, useCallback, useMemo } from 'react';
-import cn from 'classnames';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import cn from 'classnames';
 
 import Title from 'components/title/Title';
 import Label from 'components/label/Label';
@@ -9,14 +11,9 @@ import Button from 'components/button/Button';
 import l10n from 'l10n/config';
 import { paths } from 'router';
 
-import './style.css';
+import { settingsSelector } from 'store/settingsSlice';
 
-const initialState = {
-  repo: '',
-  build: '',
-  branch: '',
-  interval: '',
-};
+import './style.css';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -31,11 +28,17 @@ const reducer = (state, action) => {
 };
 
 const Settings = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
   const history = useHistory();
+  const settings = useSelector(settingsSelector);
+
+  const [formState, dispatchFormUpdate] = useReducer(reducer, settings);
 
   const onFieldChange = useCallback(({ target }) => {
-    dispatch({ type: 'UPDATE_FIELD', field: target.name, value: target.value });
+    dispatchFormUpdate({
+      type: 'UPDATE_FIELD',
+      field: target.name,
+      value: target.value,
+    });
   }, []);
 
   const onSubmit = useCallback((e) => {
@@ -49,39 +52,39 @@ const Settings = () => {
 
   const formFields = [
     {
-      name: 'repo',
+      name: 'repoName',
       id: 'settings-input-repo',
-      value: state.repo,
+      value: formState.repoName,
       label: l10n.settings_form_repo_label,
       placeholder: l10n.settings_form_repo_placeholder,
       isRequired: true,
       clearable: true,
     },
     {
-      name: 'build',
+      name: 'buildCommand',
       id: 'settings-input-build',
-      value: state.build,
+      value: formState.buildCommand,
       label: l10n.settings_form_build_label,
       placeholder: l10n.settings_form_build_placeholder,
       isRequired: true,
       clearable: true,
     },
     {
-      name: 'branch',
+      name: 'mainBranch',
       id: 'settings-input-branch',
-      value: state.branch,
+      value: formState.mainBranch,
       label: l10n.settings_form_branch_label,
       placeholder: l10n.settings_form_branch_placeholder,
       isRequired: true,
       clearable: true,
     },
     {
-      name: 'interval',
-      id: 'settings-input-interval',
-      value: state.interval,
-      label: l10n.settings_form_interval_label,
-      labelAfterField: l10n.settings_form_interval_label_after,
-      placeholder: l10n.settings_form_interval_placeholder,
+      name: 'period',
+      id: 'settings-input-period',
+      value: formState.period,
+      label: l10n.settings_form_period_label,
+      labelAfterField: l10n.settings_form_period_label_after,
+      placeholder: l10n.settings_form_period_placeholder,
       isRequired: false,
       // eslint-disable-next-line react/display-name
       render: (field) => {
