@@ -6,9 +6,11 @@ import { useHistory } from 'react-router-dom';
 
 import Build from 'components/build/Build';
 import ActionButton from 'components/actionButton/ActionButton';
+import SettingsConfig from 'components/settingsConfig/SettingsConfig';
 import { paths } from 'router';
 import l10n from 'l10n/config';
 
+import { settingsSelector } from 'store/settingsSlice';
 import { buildsListSelector } from 'store/buildsSlice';
 
 import './style.css';
@@ -16,10 +18,12 @@ import './style.css';
 const BuildsList = ({ className, loadData }) => {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const settings = useSelector(settingsSelector);
   const builds = useSelector(buildsListSelector);
 
   useEffect(() => {
-    dispatch(loadData());
+    loadData(dispatch);
   }, [loadData, dispatch]);
 
   const onBuildClick = useCallback((id) => {
@@ -38,6 +42,14 @@ const BuildsList = ({ className, loadData }) => {
       )),
     [builds]
   );
+
+  if (!settings || !settings.repoName) {
+    return (
+      <div className="builds-list__configuration">
+        <SettingsConfig />
+      </div>
+    );
+  }
 
   return (
     <div className={cn('builds-list', className)}>

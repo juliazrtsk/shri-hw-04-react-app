@@ -27,7 +27,12 @@ export const routes = [
   {
     path: paths.home,
     component: BuildsList,
-    loadData: () => getBuilds(),
+    loadData: async (dispatch) => {
+      const response = await dispatch(getSettings());
+      if (response.payload) {
+        dispatch(getBuilds());
+      }
+    },
   },
 ];
 
