@@ -16,8 +16,7 @@ export const getBuildDetails = createAsyncThunk(
 export const getBuildLogs = createAsyncThunk(
   'build/get-logs',
   async (buildId, { extra: { buildsService } }) => {
-    const { data } = await buildsService.getBuildLogs(buildId);
-    return data;
+    return await buildsService.getBuildLogs(buildId);
   }
 );
 
