@@ -1,7 +1,7 @@
-import React, { useReducer, useCallback, useMemo } from 'react';
+import React, { useReducer, useCallback, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
 
 import Title from 'components/title/Title';
@@ -22,16 +22,36 @@ const reducer = (state, action) => {
         ...state,
         [action.field]: action.value,
       };
+    case 'UPDATE_FULL_FORM':
+      return {
+        ...state,
+        ...action.settings,
+      };
     default:
       return state;
   }
 };
 
-const Settings = () => {
+const Settings = ({ loadData }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const settings = useSelector(settingsSelector);
 
   const [formState, dispatchFormUpdate] = useReducer(reducer, settings);
+
+  useEffect(() => {
+    dispatch(loadData());
+  }, [dispatch, loadData]);
+
+  useEffect(() => {
+    if (Object.keys(settings).length) {
+      console.log(settings);
+      dispatchFormUpdate({
+        type: 'UPDATE_FULL_FORM',
+        settings,
+      });
+    }
+  }, [settings]);
 
   const onFieldChange = useCallback(({ target }) => {
     dispatchFormUpdate({
@@ -156,8 +176,12 @@ const Settings = () => {
   );
 };
 
-Settings.propTypes = {};
+Settings.propTypes = {
+  loadData: PropTypes.func,
+};
 
-Settings.defaultProps = {};
+Settings.defaultProps = {
+  loadData: () => {},
+};
 
 export default Settings;

@@ -4,6 +4,7 @@ import Settings from 'pages/settings/Settings';
 import BuildsList from 'pages/buildsList/BuildsList';
 import BuildDetails from 'pages/buildDetails/BuildDetails';
 
+import { getSettings } from 'store/settingsSlice';
 import { getBuilds } from 'store/buildsSlice';
 
 export const paths = {
@@ -21,7 +22,7 @@ export const routes = [
   {
     path: paths.settings,
     component: Settings,
-    loadData: () => {},
+    loadData: () => getSettings(),
   },
   {
     path: paths.home,
