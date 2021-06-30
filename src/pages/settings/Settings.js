@@ -45,7 +45,6 @@ const Settings = ({ loadData }) => {
 
   useEffect(() => {
     if (Object.keys(settings).length) {
-      console.log(settings);
       dispatchFormUpdate({
         type: 'UPDATE_FULL_FORM',
         settings,
