@@ -13,10 +13,13 @@ module.exports = {
   settings_form_build_placeholder: 'npm run build',
   settings_form_branch_label: 'Main branch',
   settings_form_branch_placeholder: 'master',
-  settings_form_interval_label: 'Synchronize every',
-  settings_form_interval_label_after: 'minutes',
-  settings_form_interval_placeholder: '10',
+  settings_form_period_label: 'Synchronize every',
+  settings_form_period_label_after: 'minutes',
+  settings_form_period_placeholder: '10',
   settings_controls_save: 'Save',
   settings_controls_cancel: 'Cancel',
   buildsList_controls_showMore: 'Show more',
+  settings_config_controls_open: 'Open settings',
+  settings_config_description:
+    'Configure repository connection and synchronization settings',
 };
