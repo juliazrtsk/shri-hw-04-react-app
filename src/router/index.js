@@ -22,7 +22,7 @@ export const routes = [
   {
     path: paths.settings,
     component: Settings,
-    loadData: () => getSettings(),
+    loadData: (dispatch) => dispatch(getSettings()),
   },
   {
     path: paths.home,

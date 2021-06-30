@@ -40,7 +40,7 @@ const Settings = ({ loadData }) => {
   const [formState, dispatchFormUpdate] = useReducer(reducer, settings);
 
   useEffect(() => {
-    dispatch(loadData());
+    loadData(dispatch);
   }, [dispatch, loadData]);
 
   useEffect(() => {
