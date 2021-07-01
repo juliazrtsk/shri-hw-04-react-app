@@ -79,7 +79,7 @@ const Settings = ({ loadData }) => {
           repoName,
           buildCommand,
           mainBranch,
-          period,
+          period: Number.parseInt(period),
         })
       );
 
