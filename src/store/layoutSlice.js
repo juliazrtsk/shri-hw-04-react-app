@@ -1,7 +1,10 @@
 import { createSlice, createAction } from '@reduxjs/toolkit';
 
 const initialState = {
-  pending: false,
+  pending: {
+    loading: false,
+    fullscreen: true,
+  },
   networkError: null,
   modalShown: false,
 };
@@ -15,7 +18,10 @@ const layoutSlice = createSlice({
   initialState: initialState,
   extraReducers: (builder) => {
     builder.addCase(setPending, (state, action) => {
-      state.pending = action.payload;
+      state.pending = {
+        loading: !!action.payload.loading,
+        fullscreen: !!action.payload.fullscreen,
+      };
     });
     builder.addCase(setNetworkError, (state, action) => {
       state.networkError = action.payload;

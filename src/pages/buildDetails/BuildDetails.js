@@ -24,7 +24,7 @@ const BuildDetails = ({ loadData }) => {
     loadData(dispatch, buildId);
   }, [dispatch, loadData, buildId]);
 
-  if (pending) {
+  if (pending.loading) {
     return <PendingMessage />;
   }
 

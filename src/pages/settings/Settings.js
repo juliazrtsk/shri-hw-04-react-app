@@ -12,7 +12,7 @@ import PendingMessage from 'components/pendingMessage/PendingMessage';
 import l10n from 'l10n/config';
 import { paths } from 'router';
 
-import { pendingSelector } from 'store/layoutSlice';
+import { pendingSelector, setPending } from 'store/layoutSlice';
 import { settingsSelector, updateSettings } from 'store/settingsSlice';
 
 import './style.css';
@@ -73,6 +73,7 @@ const Settings = ({ loadData }) => {
     async (e) => {
       e.preventDefault();
       const { repoName, buildCommand, mainBranch, period } = formState;
+      await dispatch(setPending({ loading: true, fullscreen: false }));
       const { error, payload } = await dispatch(
         updateSettings({
           repoName,
@@ -90,6 +91,7 @@ const Settings = ({ loadData }) => {
           error: payload.message,
         });
       }
+      await dispatch(setPending({ loading: false }));
     },
     [formState, updateSettings]
   );
@@ -200,7 +202,7 @@ const Settings = ({ loadData }) => {
     [formFields]
   );
 
-  if (pending) {
+  if (pending.loading && pending.fullscreen) {
     return <PendingMessage />;
   }
 

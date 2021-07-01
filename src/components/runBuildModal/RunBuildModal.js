@@ -28,15 +28,15 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
 
   const onInputChange = ({ target }) => setHash(target.value);
   const onCloseModal = () => {
-    if (!pending) {
+    if (!pending.loading) {
       setHash('');
       onClose();
     }
   };
   const onRunBuild = useCallback(async () => {
-    await dispatch(setPending(true));
+    await dispatch(setPending({ loading: true, fullscreen: false }));
     const { payload, error } = await dispatch(addBuildToQueue(hash));
-    await dispatch(setPending(false));
+    await dispatch(setPending({ loading: false }));
     if (!error) {
       onCloseModal();
       history.push(paths.build.replace(/:buildId/g, payload.id));
@@ -70,12 +70,16 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
       <div className="run-build-modal__controls">
         <Button
           color="primary"
-          disabled={!hash || pending}
+          disabled={!hash || pending.loading}
           onClick={onRunBuild}
         >
           {l10n.modal_new_build_controls_run}
         </Button>
-        <Button color="secondary" onClick={onCloseModal} disabled={pending}>
+        <Button
+          color="secondary"
+          onClick={onCloseModal}
+          disabled={pending.loading}
+        >
           {l10n.modal_new_build_controls_cancel}
         </Button>
       </div>

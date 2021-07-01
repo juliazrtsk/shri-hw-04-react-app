@@ -20,7 +20,7 @@ export const routes = [
     path: paths.build,
     component: BuildDetails,
     loadData: async (dispatch, buildId) => {
-      await dispatch(setPending(true));
+      await dispatch(setPending({ loading: true, fullscreen: true }));
       const results = await Promise.all([
         dispatch(getBuildDetails(buildId)),
         dispatch(getBuildLogs(buildId)),
@@ -30,26 +30,26 @@ export const routes = [
           dispatch(setNetworkError(error));
         }
       });
-      await dispatch(setPending(false));
+      await dispatch(setPending({ loading: false }));
     },
   },
   {
     path: paths.settings,
     component: Settings,
     loadData: async (dispatch) => {
-      await dispatch(setPending(true));
+      await dispatch(setPending({ loading: true, fullscreen: true }));
       const { error } = await dispatch(getSettings());
       if (error) {
         dispatch(setNetworkError(error));
       }
-      dispatch(setPending(false));
+      dispatch(setPending({ loading: false }));
     },
   },
   {
     path: paths.home,
     component: BuildsList,
     loadData: async (dispatch) => {
-      await dispatch(setPending(true));
+      await dispatch(setPending({ loading: true, fullscreen: true }));
       const { error, payload } = await dispatch(getSettings());
       if (!error && payload) {
         const { error } = await dispatch(getBuilds());
@@ -59,7 +59,7 @@ export const routes = [
       } else {
         dispatch(setNetworkError(error));
       }
-      dispatch(setPending(false));
+      dispatch(setPending({ loading: false }));
     },
   },
 ];
