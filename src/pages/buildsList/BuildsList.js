@@ -8,10 +8,15 @@ import Build from 'components/build/Build';
 import ActionButton from 'components/actionButton/ActionButton';
 import SettingsMessage from 'components/settingsMessage/SettingsMessage';
 import PendingMessage from 'components/pendingMessage/PendingMessage';
+import RunBuildModal from 'components/runBuildModal/RunBuildModal';
 import { paths } from 'router';
 import l10n from 'l10n/config';
 
-import { pendingSelector } from 'store/layoutSlice';
+import {
+  toggleModal,
+  modalShownSelector,
+  pendingSelector,
+} from 'store/layoutSlice';
 import { settingsSelector } from 'store/settingsSlice';
 import { buildsListSelector } from 'store/buildsSlice';
 
@@ -24,6 +29,7 @@ const BuildsList = ({ className, loadData }) => {
   const pending = useSelector(pendingSelector);
   const settings = useSelector(settingsSelector);
   const builds = useSelector(buildsListSelector);
+  const modalShown = useSelector(modalShownSelector);
 
   useEffect(() => {
     loadData(dispatch);
@@ -60,6 +66,10 @@ const BuildsList = ({ className, loadData }) => {
       <ActionButton className="builds-list__more-button" color="secondary">
         {l10n.buildsList_controls_showMore}
       </ActionButton>
+      <RunBuildModal
+        shown={modalShown}
+        onClose={() => dispatch(toggleModal())}
+      />
     </div>
   );
 };

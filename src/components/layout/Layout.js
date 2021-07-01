@@ -12,6 +12,7 @@ import { matchLocationToPath, paths } from 'router';
 
 import { addBuildToQueue, buildDetailsSelector } from 'store/buildSlice';
 import { settingsSelector } from 'store/settingsSlice';
+import { toggleModal } from 'store/layoutSlice';
 
 import './style.css';
 
@@ -34,12 +35,16 @@ const Layout = ({ children }) => {
     }
   }, [build]);
 
+  const handleToggleModal = useCallback(() => {
+    dispatch(toggleModal());
+  }, [toggleModal]);
+
   const controls = {
     [paths.home]: [
       {
         type: 'play',
         text: 'Run build',
-        onClick: () => {},
+        onClick: handleToggleModal,
         visible: settings && settings.repoName,
       },
       {
