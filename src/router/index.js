@@ -6,6 +6,7 @@ import BuildDetails from 'pages/buildDetails/BuildDetails';
 
 import { getSettings } from 'store/settingsSlice';
 import { getBuilds } from 'store/buildsSlice';
+import { getBuildDetails, getBuildLogs } from 'store/buildSlice';
 
 export const paths = {
   home: '/',
@@ -17,7 +18,12 @@ export const routes = [
   {
     path: paths.build,
     component: BuildDetails,
-    loadData: () => {},
+    loadData: async (dispatch, buildId) => {
+      Promise.all([
+        dispatch(getBuildDetails(buildId)),
+        dispatch(getBuildLogs(buildId)),
+      ]);
+    },
   },
   {
     path: paths.settings,

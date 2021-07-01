@@ -6,8 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Build from 'components/build/Build';
 import BuildLog from 'components/buildLog/BuildLog';
 
-import { log } from 'api/buildLog';
-import { buildDetailsSelector } from 'store/buildSlice';
+import { buildDetailsSelector, buildLogSelector } from 'store/buildSlice';
 
 import './style.css';
 
@@ -16,13 +15,13 @@ const BuildDetails = ({ loadData }) => {
 
   const { buildId } = useParams();
   const build = useSelector(buildDetailsSelector);
+  const log = useSelector(buildLogSelector);
 
   useEffect(() => {
     loadData(dispatch, buildId);
   }, [dispatch, loadData, buildId]);
 
-  if (!build) {
-    console.log(build);
+  if (!(build && log)) {
     return 'loading';
   }
 
