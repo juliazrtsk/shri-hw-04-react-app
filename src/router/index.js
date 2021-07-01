@@ -7,7 +7,7 @@ import BuildDetails from 'pages/buildDetails/BuildDetails';
 import { getSettings } from 'store/settingsSlice';
 import { getBuilds } from 'store/buildsSlice';
 import { getBuildDetails, getBuildLogs } from 'store/buildSlice';
-import { setPending } from 'store/layoutSlice';
+import { setPending, setNetworkError } from 'store/layoutSlice';
 
 export const paths = {
   home: '/',
@@ -21,10 +21,15 @@ export const routes = [
     component: BuildDetails,
     loadData: async (dispatch, buildId) => {
       await dispatch(setPending(true));
-      await Promise.all([
+      const results = await Promise.all([
         dispatch(getBuildDetails(buildId)),
         dispatch(getBuildLogs(buildId)),
       ]);
+      results.forEach(({ error }) => {
+        if (error) {
+          dispatch(setNetworkError(error));
+        }
+      });
       await dispatch(setPending(false));
     },
   },
@@ -33,7 +38,10 @@ export const routes = [
     component: Settings,
     loadData: async (dispatch) => {
       await dispatch(setPending(true));
-      await dispatch(getSettings());
+      const { error } = await dispatch(getSettings());
+      if (error) {
+        dispatch(setNetworkError(error));
+      }
       dispatch(setPending(false));
     },
   },
@@ -42,9 +50,14 @@ export const routes = [
     component: BuildsList,
     loadData: async (dispatch) => {
       await dispatch(setPending(true));
-      const response = await dispatch(getSettings());
-      if (response.payload) {
-        await dispatch(getBuilds());
+      const { error, payload } = await dispatch(getSettings());
+      if (!error && payload) {
+        const { error } = await dispatch(getBuilds());
+        if (error) {
+          dispatch(setNetworkError(error));
+        }
+      } else {
+        dispatch(setNetworkError(error));
       }
       dispatch(setPending(false));
     },
