@@ -7,24 +7,36 @@ const initialState = {
 
 export const getBuildDetails = createAsyncThunk(
   'build/get-details',
-  async (buildId, { extra: { buildsService } }) => {
-    const { data } = await buildsService.getBuildDetails(buildId);
-    return data;
+  async (buildId, { rejectWithValue, extra: { buildsService } }) => {
+    try {
+      const { data } = await buildsService.getBuildDetails(buildId);
+      return data;
+    } catch (e) {
+      return rejectWithValue(e.response.message);
+    }
   }
 );
 
 export const getBuildLogs = createAsyncThunk(
   'build/get-logs',
-  async (buildId, { extra: { buildsService } }) => {
-    return await buildsService.getBuildLogs(buildId);
+  async (buildId, { rejectWithValue, extra: { buildsService } }) => {
+    try {
+      return await buildsService.getBuildLogs(buildId);
+    } catch (e) {
+      return rejectWithValue(e.response.message);
+    }
   }
 );
 
 export const addBuildToQueue = createAsyncThunk(
   'build/add-to-queue',
-  async (commitHash, { extra: { buildsService } }) => {
-    const { data } = await buildsService.addBuildToQueue(commitHash);
-    return data;
+  async (commitHash, { rejectWithValue, extra: { buildsService } }) => {
+    try {
+      const { data } = await buildsService.addBuildToQueue(commitHash);
+      return data;
+    } catch (e) {
+      return rejectWithValue(e.response.message);
+    }
   }
 );
 
@@ -33,10 +45,10 @@ const buildSlice = createSlice({
   initialState: initialState,
   extraReducers: (builder) => {
     builder.addCase(getBuildDetails.fulfilled, (state, action) => {
-      return { ...state, details: action.payload };
+      state.details = action.payload;
     });
     builder.addCase(getBuildLogs.fulfilled, (state, action) => {
-      return { ...state, log: action.payload };
+      state.log = action.payload;
     });
   },
 });
