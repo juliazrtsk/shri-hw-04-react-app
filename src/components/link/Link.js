@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 
-import './style.css';
+import './Link.css';
 
 const Link = ({ url, children }) => {
   return (

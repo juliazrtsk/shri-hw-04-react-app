@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import './style.css';
+import './Label.css';
 
 const Label = ({ children, isRequired, ...otherProps }) => {
   return (

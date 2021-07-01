@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import icons from './iconSprite.svg';
 
-import './style.css';
+import './Icon.css';
 
 const Icon = ({ className, type, color }) => {
   const iconClass = cn(

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './style.css';
+import './Copyright.css';
 
 const Copyright = ({ children }) => {
   const currentYear = new Date().getFullYear();

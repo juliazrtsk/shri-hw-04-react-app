@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 
-import './style.css';
+import './BuildLog.css';
 
 const BuildLog = ({ log, className }) => {
   return (

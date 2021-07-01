@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import './style.css';
+import './Modal.css';
 
 const Modal = (props) => {
   const { className, children, shown, onClose } = props;

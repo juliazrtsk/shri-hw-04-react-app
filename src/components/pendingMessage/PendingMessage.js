@@ -3,7 +3,7 @@ import React from 'react';
 import SystemMessage from 'components/systemMessage/SystemMessage';
 import l10n from 'l10n/config';
 
-import './style.css';
+import './PendingMessage.css';
 
 const PendingMessage = () => {
   return (

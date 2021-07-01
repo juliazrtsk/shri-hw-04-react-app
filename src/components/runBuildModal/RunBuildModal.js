@@ -12,7 +12,7 @@ import { addBuildToQueue } from 'store/buildSlice';
 import l10n from 'l10n/config';
 import { paths } from 'router';
 
-import './style.css';
+import './RunBuildModal.css';
 
 const RunBuildModal = ({ onClose, ...otherProps }) => {
   const dispatch = useDispatch();

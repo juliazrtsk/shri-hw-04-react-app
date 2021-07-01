@@ -14,7 +14,7 @@ import { addBuildToQueue, buildDetailsSelector } from 'store/buildSlice';
 import { settingsSelector } from 'store/settingsSlice';
 import { toggleModal } from 'store/layoutSlice';
 
-import './style.css';
+import './Layout.css';
 
 const Layout = ({ children }) => {
   const history = useHistory();

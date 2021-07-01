@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import './style.css';
+import './MetaInfo.css';
 
 const MetaInfo = ({ className, children }) => {
   return <div className={cn('meta', className)}>{children}</div>;

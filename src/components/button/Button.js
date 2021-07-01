@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import './style.css';
+import './Button.css';
 
 const Button = (props) => {
   const { className, children, disabled, color, ...otherProps } = props;

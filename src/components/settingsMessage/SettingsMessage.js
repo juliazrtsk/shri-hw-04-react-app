@@ -6,7 +6,7 @@ import Button from 'components/button/Button';
 import l10n from 'l10n/config';
 import { paths } from 'router';
 
-import './style.css';
+import './SettingsMessage.css';
 
 const SettingsMessage = () => {
   const history = useHistory();

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import './style.css';
+import './Input.css';
 
 const Input = (props) => {
   const { className, ...otherProps } = props;

@@ -7,7 +7,7 @@ import MetaInfo from 'components/metaInfo/MetaInfo';
 import Icon from 'components/icon/Icon';
 import CommitHash from 'components/commitHash/CommitHash';
 
-import './style.css';
+import './Build.css';
 
 const buildStatusMap = {
   Success: 'correct',
