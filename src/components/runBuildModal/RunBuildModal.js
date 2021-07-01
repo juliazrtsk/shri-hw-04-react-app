@@ -7,6 +7,7 @@ import Modal from 'components/modal/Modal';
 import Title from 'components/title/Title';
 import Button from 'components/button/Button';
 import Input from 'components/input/Input';
+import Label from 'components/label/Label';
 
 import { addBuildToQueue } from 'store/buildSlice';
 import { setPending, pendingSelector } from 'store/layoutSlice';
@@ -21,6 +22,8 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
   const history = useHistory();
 
   const [hash, setHash] = useState('');
+  const [reqError, setReqError] = useState(null);
+
   const pending = useSelector(pendingSelector);
 
   const onInputChange = ({ target }) => setHash(target.value);
@@ -37,18 +40,33 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
     if (!error) {
       onCloseModal();
       history.push(paths.build.replace(/:buildId/g, payload.id));
+    } else {
+      setReqError(error);
     }
   }, [hash]);
+
+  const resetError = () => setReqError(null);
 
   return (
     <Modal className="run-build-modal" onClose={onCloseModal} {...otherProps}>
       <Title level={2}>{l10n.modal_new_build_title}</Title>
       <p>{l10n.modal_new_build_description}</p>
-      <Input
-        value={hash}
-        onChange={onInputChange}
-        placeholder={l10n.modal_new_build_hash_placeholder}
-      />
+      <div className="run-build-modal__hash">
+        <Input
+          id="modal-commit-hash"
+          value={hash}
+          onChange={onInputChange}
+          placeholder={l10n.modal_new_build_hash_placeholder}
+          error={reqError}
+          onBlur={resetError}
+          onFocus={resetError}
+        />
+        {reqError && (
+          <Label htmlFor="modal-commit-hash" error={reqError}>
+            {reqError.message}
+          </Label>
+        )}
+      </div>
       <div className="run-build-modal__controls">
         <Button
           color="primary"
