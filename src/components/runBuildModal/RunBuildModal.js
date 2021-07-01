@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import Modal from 'components/modal/Modal';
 import Title from 'components/title/Title';
 import Button from 'components/button/Button';
 import Input from 'components/input/Input';
 
+import { addBuildToQueue } from 'store/buildSlice';
 import l10n from 'l10n/config';
+import { paths } from 'router';
 
 import './style.css';
 
 const RunBuildModal = ({ onClose, ...otherProps }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const [hash, setHash] = useState('');
 
   const onInputChange = ({ target }) => setHash(target.value);
@@ -18,6 +25,13 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
     setHash('');
     onClose();
   };
+  const onRunBuild = useCallback(async () => {
+    const { payload, error } = await dispatch(addBuildToQueue(hash));
+    if (!error) {
+      onCloseModal();
+      history.push(paths.build.replace(/:buildId/g, payload.id));
+    }
+  }, [hash]);
 
   return (
     <Modal className="run-build-modal" {...otherProps}>
@@ -29,7 +43,7 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
         placeholder={l10n.modal_new_build_hash_placeholder}
       />
       <div className="run-build-modal__controls">
-        <Button color="primary" disabled={!hash}>
+        <Button color="primary" disabled={!hash} onClick={onRunBuild}>
           {l10n.modal_new_build_controls_run}
         </Button>
         <Button color="secondary" onClick={onCloseModal}>
