@@ -52,7 +52,7 @@ const BuildsList = ({ className, loadData }) => {
     [builds]
   );
 
-  if (pending) {
+  if (pending && !modalShown) {
     return <PendingMessage />;
   }
 

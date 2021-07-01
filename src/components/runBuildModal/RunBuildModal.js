@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import Modal from 'components/modal/Modal';
@@ -9,6 +9,8 @@ import Button from 'components/button/Button';
 import Input from 'components/input/Input';
 
 import { addBuildToQueue } from 'store/buildSlice';
+import { setPending, pendingSelector } from 'store/layoutSlice';
+
 import l10n from 'l10n/config';
 import { paths } from 'router';
 
@@ -19,6 +21,7 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
   const history = useHistory();
 
   const [hash, setHash] = useState('');
+  const pending = useSelector(pendingSelector);
 
   const onInputChange = ({ target }) => setHash(target.value);
   const onCloseModal = () => {
@@ -26,7 +29,9 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
     onClose();
   };
   const onRunBuild = useCallback(async () => {
+    await dispatch(setPending(true));
     const { payload, error } = await dispatch(addBuildToQueue(hash));
+    await dispatch(setPending(false));
     if (!error) {
       onCloseModal();
       history.push(paths.build.replace(/:buildId/g, payload.id));
@@ -43,10 +48,14 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
         placeholder={l10n.modal_new_build_hash_placeholder}
       />
       <div className="run-build-modal__controls">
-        <Button color="primary" disabled={!hash} onClick={onRunBuild}>
+        <Button
+          color="primary"
+          disabled={!hash || pending}
+          onClick={onRunBuild}
+        >
           {l10n.modal_new_build_controls_run}
         </Button>
-        <Button color="secondary" onClick={onCloseModal}>
+        <Button color="secondary" onClick={onCloseModal} disabled={pending}>
           {l10n.modal_new_build_controls_cancel}
         </Button>
       </div>
