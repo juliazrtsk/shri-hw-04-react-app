@@ -1,0 +1,12 @@
+.system-msg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.system-msg__message {
+  width: 264px;
+  text-align: center;
+  font-size: 13px;
+}
