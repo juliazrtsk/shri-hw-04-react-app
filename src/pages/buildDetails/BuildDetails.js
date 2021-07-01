@@ -5,7 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Build from 'components/build/Build';
 import BuildLog from 'components/buildLog/BuildLog';
+import PendingMessage from 'components/pendingMessage/PendingMessage';
 
+import { pendingSelector } from 'store/layoutSlice';
 import { buildDetailsSelector, buildLogSelector } from 'store/buildSlice';
 
 import './style.css';
@@ -14,6 +16,7 @@ const BuildDetails = ({ loadData }) => {
   const dispatch = useDispatch();
 
   const { buildId } = useParams();
+  const pending = useSelector(pendingSelector);
   const build = useSelector(buildDetailsSelector);
   const log = useSelector(buildLogSelector);
 
@@ -21,14 +24,18 @@ const BuildDetails = ({ loadData }) => {
     loadData(dispatch, buildId);
   }, [dispatch, loadData, buildId]);
 
-  if (!(build && log)) {
-    return 'loading';
+  if (pending) {
+    return <PendingMessage />;
   }
 
   return (
     <article className="build-details">
-      <Build {...build} view="expanded" />
-      <BuildLog className="build-details__log" log={log} />
+      {build && log && (
+        <>
+          <Build {...build} view="expanded" />
+          <BuildLog className="build-details__log" log={log} />
+        </>
+      )}
     </article>
   );
 };

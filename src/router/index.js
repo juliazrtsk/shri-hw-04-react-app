@@ -20,10 +20,12 @@ export const routes = [
     path: paths.build,
     component: BuildDetails,
     loadData: async (dispatch, buildId) => {
-      Promise.all([
+      await dispatch(setPending(true));
+      await Promise.all([
         dispatch(getBuildDetails(buildId)),
         dispatch(getBuildLogs(buildId)),
       ]);
+      await dispatch(setPending(false));
     },
   },
   {
