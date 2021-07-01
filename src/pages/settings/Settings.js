@@ -8,9 +8,11 @@ import Title from 'components/title/Title';
 import Label from 'components/label/Label';
 import Input from 'components/input/Input';
 import Button from 'components/button/Button';
+import PendingMessage from 'components/pendingMessage/PendingMessage';
 import l10n from 'l10n/config';
 import { paths } from 'router';
 
+import { pendingSelector } from 'store/layoutSlice';
 import { settingsSelector } from 'store/settingsSlice';
 
 import './style.css';
@@ -35,6 +37,8 @@ const reducer = (state, action) => {
 const Settings = ({ loadData }) => {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const pending = useSelector(pendingSelector);
   const settings = useSelector(settingsSelector);
 
   const [formState, dispatchFormUpdate] = useReducer(reducer, settings);
@@ -157,6 +161,10 @@ const Settings = ({ loadData }) => {
       }),
     [formFields]
   );
+
+  if (pending) {
+    return <PendingMessage />;
+  }
 
   return (
     <div className={cn('settings')}>

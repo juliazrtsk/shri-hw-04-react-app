@@ -31,7 +31,11 @@ export const routes = [
   {
     path: paths.settings,
     component: Settings,
-    loadData: (dispatch) => dispatch(getSettings()),
+    loadData: async (dispatch) => {
+      await dispatch(setPending(true));
+      await dispatch(getSettings());
+      dispatch(setPending(false));
+    },
   },
   {
     path: paths.home,
