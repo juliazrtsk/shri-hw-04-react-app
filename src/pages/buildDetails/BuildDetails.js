@@ -30,7 +30,7 @@ const BuildDetails = ({ loadData }) => {
 
   return (
     <article className="build-details">
-      {build && log && (
+      {build && log !== null && (
         <>
           <Build {...build} view="expanded" />
           <BuildLog className="build-details__log" log={log} />
