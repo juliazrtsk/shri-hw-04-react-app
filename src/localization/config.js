@@ -22,4 +22,5 @@ module.exports = {
   settings_msg_controls_open: 'Open settings',
   settings_msg_description:
     'Configure repository connection and synchronization settings',
+  pending_msg_description: 'Loading data',
 };
