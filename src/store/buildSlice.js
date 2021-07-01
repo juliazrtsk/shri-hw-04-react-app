@@ -35,7 +35,7 @@ export const addBuildToQueue = createAsyncThunk(
       const { data } = await buildsService.addBuildToQueue(commitHash);
       return data;
     } catch (e) {
-      return rejectWithValue(e.response.message);
+      return rejectWithValue(e.response.data.message);
     }
   }
 );

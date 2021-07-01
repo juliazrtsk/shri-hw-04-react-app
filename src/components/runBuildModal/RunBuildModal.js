@@ -41,7 +41,7 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
       onCloseModal();
       history.push(paths.build.replace(/:buildId/g, payload.id));
     } else {
-      setReqError(error);
+      setReqError(payload);
     }
   }, [hash]);
 
@@ -57,13 +57,13 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
           value={hash}
           onChange={onInputChange}
           placeholder={l10n.modal_new_build_hash_placeholder}
-          error={reqError}
+          error={!!reqError}
           onBlur={resetError}
           onFocus={resetError}
         />
         {reqError && (
-          <Label htmlFor="modal-commit-hash" error={reqError}>
-            {reqError.message}
+          <Label htmlFor="modal-commit-hash" error={!!reqError}>
+            {reqError}
           </Label>
         )}
       </div>

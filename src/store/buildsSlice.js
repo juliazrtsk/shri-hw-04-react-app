@@ -2,9 +2,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getBuilds = createAsyncThunk(
   'builds/get-list',
-  async (_, { extra: { buildsService } }) => {
-    const { data } = await buildsService.getBuildsList();
-    return data;
+  async (_, { rejectWithValue, extra: { buildsService } }) => {
+    try {
+      const { data } = await buildsService.getBuildsList();
+      return data;
+    } catch (e) {
+      return rejectWithValue(e.response.message);
+    }
   }
 );
 
