@@ -23,6 +23,7 @@ module.exports = {
   settings_msg_description:
     'Configure repository connection and synchronization settings',
   pending_msg_description: 'Loading data',
+  network_err_msg_description: 'Network connection error.\nTry again later',
   modal_new_build_title: 'New build',
   modal_new_build_description: 'Enter the commit hash which you want to build.',
   modal_new_build_hash_placeholder: 'Commit hash',
