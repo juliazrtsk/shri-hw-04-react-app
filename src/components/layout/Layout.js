@@ -30,8 +30,12 @@ const Layout = ({ children }) => {
 
   const rebuild = useCallback(async () => {
     if (build) {
-      const { id } = await dispatch(addBuildToQueue(build.commitHash));
-      redirect(paths.build.replace(/:buildId/g, id));
+      const { payload, error } = await dispatch(
+        addBuildToQueue(build.commitHash)
+      );
+      if (!error) {
+        redirect(paths.build.replace(/:buildId/g, payload.id));
+      }
     }
   }, [build]);
 
@@ -45,12 +49,11 @@ const Layout = ({ children }) => {
         type: 'play',
         text: 'Run build',
         onClick: handleToggleModal,
-        visible: settings && settings.repoName,
+        invisible: !(settings && settings.repoName),
       },
       {
         type: 'settings',
         onClick: () => redirect(paths.settings),
-        visible: true,
       },
     ],
     [paths.settings]: [],
@@ -65,8 +68,8 @@ const Layout = ({ children }) => {
 
   const renderControls = () =>
     controls[path].map(
-      ({ type, text, onClick, visible }) =>
-        visible && (
+      ({ type, text, onClick, invisible }) =>
+        !invisible && (
           <ActionButton
             key={`layout_control_${type}`}
             type={type}
