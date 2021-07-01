@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { buildReducer } from './buildSlice';
 import { buildsReducer } from './buildsSlice';
 import { settingsReducer } from './settingsSlice';
+import { layoutReducer } from './layoutSlice';
 
 export const createStore = (options) =>
   configureStore({
@@ -10,6 +11,7 @@ export const createStore = (options) =>
       build: buildReducer,
       builds: buildsReducer,
       settings: settingsReducer,
+      layout: layoutReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
