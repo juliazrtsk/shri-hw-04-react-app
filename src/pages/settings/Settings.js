@@ -109,6 +109,7 @@ const Settings = ({ loadData }) => {
       labelAfterField: l10n.settings_form_period_label_after,
       placeholder: l10n.settings_form_period_placeholder,
       isRequired: false,
+      mask: [/\d/, /\d/, /\d/],
       // eslint-disable-next-line react/display-name
       render: (field) => {
         const {
