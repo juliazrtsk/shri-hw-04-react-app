@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
-import Layout from 'components/layout/Layout';
-import { routes, paths } from 'router';
+import App from 'components/app/App';
+
 import { createStore } from 'store';
 import { buildsService, settingsService } from 'api';
 
@@ -20,16 +20,7 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <Layout>
-          <Switch>
-            {routes.map((route) => (
-              <Route path={route.path} key={route.path}>
-                <route.component loadData={route.loadData} />
-              </Route>
-            ))}
-            <Redirect to={paths.home} />
-          </Switch>
-        </Layout>
+        <App />
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,
