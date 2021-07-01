@@ -25,8 +25,10 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
 
   const onInputChange = ({ target }) => setHash(target.value);
   const onCloseModal = () => {
-    setHash('');
-    onClose();
+    if (!pending) {
+      setHash('');
+      onClose();
+    }
   };
   const onRunBuild = useCallback(async () => {
     await dispatch(setPending(true));
@@ -39,7 +41,7 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
   }, [hash]);
 
   return (
-    <Modal className="run-build-modal" {...otherProps}>
+    <Modal className="run-build-modal" onClose={onCloseModal} {...otherProps}>
       <Title level={2}>{l10n.modal_new_build_title}</Title>
       <p>{l10n.modal_new_build_description}</p>
       <Input
