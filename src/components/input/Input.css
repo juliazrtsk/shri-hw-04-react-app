@@ -22,3 +22,7 @@
 .input::placeholder {
   opacity: 0.2;
 }
+
+.input_error {
+  border-color: var(--color-accent-error);
+}

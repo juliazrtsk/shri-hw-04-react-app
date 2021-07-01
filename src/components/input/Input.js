@@ -6,17 +6,28 @@ import MaskedInput from 'react-text-mask';
 import './Input.css';
 
 const Input = (props) => {
-  const { className, mask, ...otherProps } = props;
+  const { className, mask, error, ...otherProps } = props;
+
   const masking = useCallback(() => {
-    return mask ? mask : false;
+    // Specific masked input behaviour
+    return mask || false;
   }, [mask]);
+
   return (
-    <MaskedInput
-      className={cn('input', className)}
-      mask={masking}
-      guide={false}
-      {...otherProps}
-    />
+    <>
+      <MaskedInput
+        className={cn(
+          'input',
+          {
+            input_error: error,
+          },
+          className
+        )}
+        mask={masking}
+        guide={false}
+        {...otherProps}
+      />
+    </>
   );
 };
 
@@ -24,12 +35,14 @@ Input.propTypes = {
   className: PropTypes.string,
   onChange: PropTypes.func,
   mask: PropTypes.array,
+  error: PropTypes.bool,
 };
 
 Input.defaultProps = {
   className: '',
   onChange: () => {},
   mask: null,
+  error: false,
 };
 
 export default Input;
