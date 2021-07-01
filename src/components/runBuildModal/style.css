@@ -1,0 +1,15 @@
+.run-build-modal .modal__window .input {
+  width: 100%;
+}
+
+.run-build-modal .modal__window > * {
+  margin: 0 0 12px;
+}
+
+.run-build-modal .modal__window > :last-child {
+  margin-bottom: 0;
+}
+
+.run-build-modal__controls > :first-child {
+  margin-right: 12px;
+}
