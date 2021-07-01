@@ -7,9 +7,11 @@ import { useHistory } from 'react-router-dom';
 import Build from 'components/build/Build';
 import ActionButton from 'components/actionButton/ActionButton';
 import SettingsMessage from 'components/settingsMessage/SettingsMessage';
+import PendingMessage from 'components/pendingMessage/PendingMessage';
 import { paths } from 'router';
 import l10n from 'l10n/config';
 
+import { pendingSelector } from 'store/layoutSlice';
 import { settingsSelector } from 'store/settingsSlice';
 import { buildsListSelector } from 'store/buildsSlice';
 
@@ -19,6 +21,7 @@ const BuildsList = ({ className, loadData }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const pending = useSelector(pendingSelector);
   const settings = useSelector(settingsSelector);
   const builds = useSelector(buildsListSelector);
 
@@ -42,6 +45,10 @@ const BuildsList = ({ className, loadData }) => {
       )),
     [builds]
   );
+
+  if (pending) {
+    return <PendingMessage />;
+  }
 
   if (!settings || !settings.repoName) {
     return <SettingsMessage />;

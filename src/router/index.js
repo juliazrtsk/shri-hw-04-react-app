@@ -7,6 +7,7 @@ import BuildDetails from 'pages/buildDetails/BuildDetails';
 import { getSettings } from 'store/settingsSlice';
 import { getBuilds } from 'store/buildsSlice';
 import { getBuildDetails, getBuildLogs } from 'store/buildSlice';
+import { setPending } from 'store/layoutSlice';
 
 export const paths = {
   home: '/',
@@ -34,10 +35,12 @@ export const routes = [
     path: paths.home,
     component: BuildsList,
     loadData: async (dispatch) => {
+      await dispatch(setPending(true));
       const response = await dispatch(getSettings());
       if (response.payload) {
-        dispatch(getBuilds());
+        await dispatch(getBuilds());
       }
+      dispatch(setPending(false));
     },
   },
 ];
