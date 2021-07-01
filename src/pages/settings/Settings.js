@@ -213,10 +213,14 @@ const Settings = ({ loadData }) => {
       <form className="settings__form" onSubmit={onSubmit}>
         {renderedFormFields}
         <section className="settings__controls">
-          <Button type="submit" disabled={formState.error}>
+          <Button type="submit" disabled={pending.loading}>
             {l10n.settings_controls_save}
           </Button>
-          <Button color="secondary" onClick={onCancel}>
+          <Button
+            color="secondary"
+            onClick={onCancel}
+            disabled={pending.loading}
+          >
             {l10n.settings_controls_cancel}
           </Button>
         </section>
