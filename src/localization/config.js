@@ -19,7 +19,7 @@ module.exports = {
   settings_controls_save: 'Save',
   settings_controls_cancel: 'Cancel',
   buildsList_controls_showMore: 'Show more',
-  settings_config_controls_open: 'Open settings',
-  settings_config_description:
+  settings_msg_controls_open: 'Open settings',
+  settings_msg_description:
     'Configure repository connection and synchronization settings',
 };

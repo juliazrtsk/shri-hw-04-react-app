@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import Build from 'components/build/Build';
 import ActionButton from 'components/actionButton/ActionButton';
-import SettingsConfig from 'components/settingsConfig/SettingsConfig';
+import SettingsMessage from 'components/settingsMessage/SettingsMessage';
 import { paths } from 'router';
 import l10n from 'l10n/config';
 
@@ -44,11 +44,7 @@ const BuildsList = ({ className, loadData }) => {
   );
 
   if (!settings || !settings.repoName) {
-    return (
-      <div className="builds-list__configuration">
-        <SettingsConfig />
-      </div>
-    );
+    return <SettingsMessage />;
   }
 
   return (
