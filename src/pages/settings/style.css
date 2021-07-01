@@ -44,7 +44,7 @@
 }
 
 .settings__controls {
-  margin-top: 25px;
+  margin: 25px 0;
 }
 
 .settings__controls > :first-child {

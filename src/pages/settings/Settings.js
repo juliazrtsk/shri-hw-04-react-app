@@ -13,7 +13,7 @@ import l10n from 'l10n/config';
 import { paths } from 'router';
 
 import { pendingSelector } from 'store/layoutSlice';
-import { settingsSelector } from 'store/settingsSlice';
+import { settingsSelector, updateSettings } from 'store/settingsSlice';
 
 import './style.css';
 
@@ -28,6 +28,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         ...action.settings,
+      };
+    case 'SET_ERROR':
+      return {
+        ...state,
+        error: action.error,
       };
     default:
       return state;
@@ -64,9 +69,36 @@ const Settings = ({ loadData }) => {
     });
   }, []);
 
-  const onSubmit = useCallback((e) => {
-    e.preventDefault();
-    history.push(paths.home);
+  const onSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      const { repoName, buildCommand, mainBranch, period } = formState;
+      const { error, payload } = await dispatch(
+        updateSettings({
+          repoName,
+          buildCommand,
+          mainBranch,
+          period,
+        })
+      );
+
+      if (!error) {
+        history.push(paths.home);
+      } else {
+        dispatchFormUpdate({
+          type: 'SET_ERROR',
+          error: payload.message,
+        });
+      }
+    },
+    [formState, updateSettings]
+  );
+
+  const resetError = useCallback(() => {
+    dispatchFormUpdate({
+      type: 'SET_ERROR',
+      error: null,
+    });
   }, []);
 
   const onCancel = useCallback(() => {
@@ -81,7 +113,8 @@ const Settings = ({ loadData }) => {
       label: l10n.settings_form_repo_label,
       placeholder: l10n.settings_form_repo_placeholder,
       isRequired: true,
-      clearable: true,
+      onFocus: resetError,
+      onBlur: resetError,
     },
     {
       name: 'buildCommand',
@@ -90,7 +123,8 @@ const Settings = ({ loadData }) => {
       label: l10n.settings_form_build_label,
       placeholder: l10n.settings_form_build_placeholder,
       isRequired: true,
-      clearable: true,
+      onFocus: resetError,
+      onBlur: resetError,
     },
     {
       name: 'mainBranch',
@@ -99,7 +133,8 @@ const Settings = ({ loadData }) => {
       label: l10n.settings_form_branch_label,
       placeholder: l10n.settings_form_branch_placeholder,
       isRequired: true,
-      clearable: true,
+      onFocus: resetError,
+      onBlur: resetError,
     },
     {
       name: 'period',
@@ -109,6 +144,8 @@ const Settings = ({ loadData }) => {
       labelAfterField: l10n.settings_form_period_label_after,
       placeholder: l10n.settings_form_period_placeholder,
       isRequired: false,
+      onFocus: resetError,
+      onBlur: resetError,
       mask: [/\d/, /\d/, /\d/],
       // eslint-disable-next-line react/display-name
       render: (field) => {
@@ -174,11 +211,14 @@ const Settings = ({ loadData }) => {
       <form className="settings__form" onSubmit={onSubmit}>
         {renderedFormFields}
         <section className="settings__controls">
-          <Button type="submit">{l10n.settings_controls_save}</Button>
+          <Button type="submit" disabled={formState.error}>
+            {l10n.settings_controls_save}
+          </Button>
           <Button color="secondary" onClick={onCancel}>
             {l10n.settings_controls_cancel}
           </Button>
         </section>
+        {formState.error && <Label error>{formState.error}</Label>}
       </form>
     </div>
   );
