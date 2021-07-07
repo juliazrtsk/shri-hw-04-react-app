@@ -9,7 +9,12 @@ const PendingMessage = () => {
   return (
     <SystemMessage className="pending-msg">
       <div className="pending-msg__logo" />
-      <p className="pending-msg__description">{l10n.pending_msg_description}</p>
+      <p
+        className="pending-msg__description"
+        data-testid="system-message-pending"
+      >
+        {l10n.pending_msg_description}
+      </p>
     </SystemMessage>
   );
 };
