@@ -1,7 +1,7 @@
 import { matchPath } from 'react-router-dom';
 
 import Settings from 'pages/settings/Settings';
-import BuildsList from 'pages/buildsList/BuildsList';
+import Builds from 'pages/builds/Builds';
 import BuildDetails from 'pages/buildDetails/BuildDetails';
 
 import { getSettings } from 'store/settingsSlice';
@@ -47,7 +47,7 @@ export const routes = [
   },
   {
     path: paths.home,
-    component: BuildsList,
+    component: Builds,
     loadData: async (dispatch) => {
       await dispatch(setPending({ loading: true, fullscreen: true }));
       const { error, payload } = await dispatch(getSettings());

@@ -1,0 +1,10 @@
+.builds {
+  margin: 8px 0 20px;
+}
+
+@media screen and (max-width: 480px) {
+  .builds__more-button {
+    width: 100%;
+    height: 36px;
+  }
+}

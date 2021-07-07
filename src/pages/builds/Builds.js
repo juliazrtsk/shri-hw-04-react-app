@@ -1,15 +1,13 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
-import { useHistory } from 'react-router-dom';
 
-import Build from 'components/build/Build';
+import BuildsList from 'components/buildsList/BuildsList';
 import ActionButton from 'components/actionButton/ActionButton';
 import SettingsMessage from 'components/settingsMessage/SettingsMessage';
 import PendingMessage from 'components/pendingMessage/PendingMessage';
 import RunBuildModal from 'components/runBuildModal/RunBuildModal';
-import { paths } from 'router';
 import l10n from 'l10n/config';
 
 import {
@@ -20,10 +18,9 @@ import {
 import { settingsSelector } from 'store/settingsSlice';
 import { buildsListSelector } from 'store/buildsSlice';
 
-import './style.css';
+import './Builds.css';
 
-const BuildsList = ({ className, loadData }) => {
-  const history = useHistory();
+const Builds = ({ className, loadData }) => {
   const dispatch = useDispatch();
 
   const pending = useSelector(pendingSelector);
@@ -35,23 +32,6 @@ const BuildsList = ({ className, loadData }) => {
     loadData(dispatch);
   }, [loadData, dispatch]);
 
-  const onBuildClick = useCallback((id) => {
-    history.push(paths.build.replace(/:buildId/g, id));
-  }, []);
-
-  const renderBuilds = useCallback(
-    () =>
-      builds.map((build) => (
-        <Build
-          className="builds-list__build"
-          key={build.id}
-          onClick={onBuildClick}
-          {...build}
-        />
-      )),
-    [builds]
-  );
-
   if (pending.loading && !modalShown) {
     return <PendingMessage />;
   }
@@ -61,27 +41,29 @@ const BuildsList = ({ className, loadData }) => {
   }
 
   return (
-    <div className={cn('builds-list', className)}>
-      {builds && renderBuilds()}
-      <ActionButton className="builds-list__more-button" color="secondary">
+    <div className={cn('builds', className)} data-testid="page-builds">
+      {builds && <BuildsList builds={builds} />}
+      <ActionButton className="builds__more-button" color="secondary">
         {l10n.buildsList_controls_showMore}
       </ActionButton>
-      <RunBuildModal
-        shown={modalShown}
-        onClose={() => dispatch(toggleModal())}
-      />
+      {modalShown && (
+        <RunBuildModal
+          shown={modalShown}
+          onClose={() => dispatch(toggleModal())}
+        />
+      )}
     </div>
   );
 };
 
-BuildsList.propTypes = {
+Builds.propTypes = {
   className: PropTypes.string,
   loadData: PropTypes.func,
 };
 
-BuildsList.defaultProps = {
+Builds.defaultProps = {
   className: '',
   loadData: () => {},
 };
 
-export default BuildsList;
+export default Builds;
