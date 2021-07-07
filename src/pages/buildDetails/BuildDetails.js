@@ -10,7 +10,7 @@ import PendingMessage from 'components/pendingMessage/PendingMessage';
 import { pendingSelector } from 'store/layoutSlice';
 import { buildDetailsSelector, buildLogSelector } from 'store/buildSlice';
 
-import './style.css';
+import './BuildDetails.css';
 
 const BuildDetails = ({ loadData }) => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const BuildDetails = ({ loadData }) => {
   }
 
   return (
-    <article className="build-details">
+    <article className="build-details" data-testid="page-build-details">
       {build && log !== null && (
         <>
           <Build {...build} view="expanded" />
