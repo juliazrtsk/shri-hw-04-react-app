@@ -110,25 +110,6 @@ describe('Builds list page', () => {
     expect(buildsList).toBeInTheDocument();
   });
 
-  it('should render Run build button when there are settings in the store', () => {
-    const store = createStore({
-      preloadedState: {
-        settings: { repoName: 'repo' },
-      },
-    });
-    const buildsPage = (
-      <Router history={history}>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </Router>
-    );
-
-    const { getByTestId } = render(buildsPage);
-    const runBuild = getByTestId('header-control-run-build');
-    expect(runBuild).toBeInTheDocument();
-  });
-
   it('should show modal window after click on Run build button', () => {
     const store = createStore({
       preloadedState: {
