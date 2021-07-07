@@ -6,9 +6,9 @@ import cn from 'classnames';
 import './Modal.css';
 
 const Modal = (props) => {
-  const { className, children, shown, onClose } = props;
+  const { className, children, onClose } = props;
 
-  const modal = shown && (
+  const modal = (
     <div className={cn('modal', className)}>
       <div className="modal__window">{children}</div>
       <div className="modal__backdrop" onClick={onClose} />
@@ -21,12 +21,10 @@ const Modal = (props) => {
 Modal.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
-  shown: PropTypes.bool,
 };
 
 Modal.defaultProps = {
   className: '',
-  shown: false,
 };
 
 export default Modal;
