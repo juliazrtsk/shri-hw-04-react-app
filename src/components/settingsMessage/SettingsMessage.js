@@ -18,7 +18,10 @@ const SettingsMessage = () => {
   return (
     <SystemMessage className="settings-msg">
       <div className="settings-msg__logo" />
-      <p className="settings-msg__description">
+      <p
+        className="settings-msg__description"
+        data-testid="system-message-settings-unset"
+      >
         {l10n.settings_msg_description}
       </p>
       <Button color="primary" onClick={onClick}>

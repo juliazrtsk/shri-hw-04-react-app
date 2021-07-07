@@ -36,4 +36,21 @@ describe('Builds list page', () => {
     const buildsList = getByTestId('builds-list');
     expect(buildsList).toBeInTheDocument();
   });
+
+  it('should render system message when there is no settings in the store', () => {
+    const store = createStore({
+      preloadedState: {
+        settings: undefined,
+      },
+    });
+    const buildsPage = (
+      <Provider store={store}>
+        <Builds loadData={() => {}} />
+      </Provider>
+    );
+
+    const { getByTestId } = render(buildsPage);
+    const buildsList = getByTestId('system-message-settings-unset');
+    expect(buildsList).toBeInTheDocument();
+  });
 });
