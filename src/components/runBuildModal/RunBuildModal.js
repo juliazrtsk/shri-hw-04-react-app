@@ -54,6 +54,7 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
       <div className="run-build-modal__hash">
         <Input
           id="modal-commit-hash"
+          data-testid="modal-input-hash"
           value={hash}
           onChange={onInputChange}
           placeholder={l10n.modal_new_build_hash_placeholder}
@@ -72,6 +73,7 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
           color="primary"
           disabled={!hash || pending.loading}
           onClick={onRunBuild}
+          data-testid="modal-build-button-run"
         >
           {l10n.modal_new_build_controls_run}
         </Button>
@@ -79,6 +81,7 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
           color="secondary"
           onClick={onCloseModal}
           disabled={pending.loading}
+          data-testid="modal-build-button-cancel"
         >
           {l10n.modal_new_build_controls_cancel}
         </Button>
