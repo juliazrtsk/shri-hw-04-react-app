@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { render, queryAllByRole } from '@testing-library/react';
+import events from '@testing-library/user-event';
 
 import { createStore } from 'store';
 import Layout from 'components/layout/Layout';
@@ -112,5 +113,29 @@ describe('Layout', () => {
 
     expect(rebuildBtn).toBeInTheDocument();
     expect(settingsBtn).toBeInTheDocument();
+  });
+
+  it('should have redirect on /settings route after click on Settings button', () => {
+    const store = createStore({
+      preloadedState: {
+        settings: undefined,
+      },
+    });
+    const history = createMemoryHistory({
+      initialEntries: ['/'],
+      initialIndex: 0,
+    });
+    const layout = (
+      <Router history={history}>
+        <Provider store={store}>
+          <Layout />
+        </Provider>
+      </Router>
+    );
+
+    const { getByTestId } = render(layout);
+    events.click(getByTestId('header-control-settings'));
+
+    expect(history.location.pathname).toBe('/settings');
   });
 });
