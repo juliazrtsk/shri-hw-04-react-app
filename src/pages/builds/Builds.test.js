@@ -1,8 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render } from '@testing-library/react';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
+import { render } from '@testing-library/react';
+import events from '@testing-library/user-event';
 
 import { createStore } from 'store';
 
@@ -11,6 +12,8 @@ import Builds from './Builds';
 
 describe('Builds list page', () => {
   let history;
+  const modal = document.createElement('div');
+  modal.setAttribute('id', 'modal');
 
   beforeAll(() => {
     history = createMemoryHistory({
@@ -105,5 +108,47 @@ describe('Builds list page', () => {
     const { getByTestId } = render(buildsPage);
     const buildsList = getByTestId('system-message-pending');
     expect(buildsList).toBeInTheDocument();
+  });
+
+  it('should render Run build button when there are settings in the store', () => {
+    const store = createStore({
+      preloadedState: {
+        settings: { repoName: 'repo' },
+      },
+    });
+    const buildsPage = (
+      <Router history={history}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </Router>
+    );
+
+    const { getByTestId } = render(buildsPage);
+    const runBuild = getByTestId('header-control-run-build');
+    expect(runBuild).toBeInTheDocument();
+  });
+
+  it('should show modal window after click on Run build button', () => {
+    const store = createStore({
+      preloadedState: {
+        settings: { repoName: 'repo' },
+      },
+    });
+    const buildsPage = (
+      <Router history={history}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </Router>
+    );
+
+    const { getByTestId } = render(buildsPage, {
+      container: document.body.appendChild(modal),
+    });
+    events.click(getByTestId('header-control-run-build'));
+
+    const modalWindow = getByTestId('modal-run-build');
+    expect(modalWindow).toBeInTheDocument();
   });
 });

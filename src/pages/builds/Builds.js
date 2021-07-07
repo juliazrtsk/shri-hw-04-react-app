@@ -46,7 +46,12 @@ const Builds = ({ className, loadData }) => {
       <ActionButton className="builds__more-button" color="secondary">
         {l10n.buildsList_controls_showMore}
       </ActionButton>
-      {modalShown && <RunBuildModal onClose={() => dispatch(toggleModal())} />}
+      {modalShown && (
+        <RunBuildModal
+          onClose={() => dispatch(toggleModal())}
+          testId="modal-run-build"
+        />
+      )}
     </div>
   );
 };
