@@ -15,7 +15,7 @@ import { paths } from 'router';
 import { pendingSelector, setPending } from 'store/layoutSlice';
 import { settingsSelector, updateSettings } from 'store/settingsSlice';
 
-import './style.css';
+import './Settings.css';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -207,7 +207,7 @@ const Settings = ({ loadData }) => {
   }
 
   return (
-    <div className={cn('settings')}>
+    <div className={cn('settings')} data-testid="page-settings">
       <Title level={3}>{l10n.settings_title}</Title>
       <p className="settings__description">{l10n.settings_description}</p>
       <form className="settings__form" onSubmit={onSubmit}>
