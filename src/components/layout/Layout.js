@@ -52,6 +52,7 @@ const Layout = ({ children }) => {
         text: 'Run build',
         onClick: handleToggleModal,
         invisible: !(settings && settings.repoName),
+        testId: 'header-control-run-build',
       },
       {
         type: 'settings',
@@ -70,12 +71,13 @@ const Layout = ({ children }) => {
 
   const renderControls = () =>
     controls[path].map(
-      ({ type, text, onClick, invisible }) =>
+      ({ type, text, onClick, invisible, testId }) =>
         !invisible && (
           <ActionButton
             key={`layout_control_${type}`}
             type={type}
             onClick={onClick}
+            testId={testId}
           >
             {text}
           </ActionButton>
