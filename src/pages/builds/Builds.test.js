@@ -11,16 +11,8 @@ import App from 'components/app/App';
 import Builds from './Builds';
 
 describe('Builds list page', () => {
-  let history;
   const modal = document.createElement('div');
   modal.setAttribute('id', 'modal');
-
-  beforeAll(() => {
-    history = createMemoryHistory({
-      initialEntries: ['/'],
-      initialIndex: 0,
-    });
-  });
 
   it('should render builds list when builds array is in the store', () => {
     const store = createStore({
@@ -65,27 +57,33 @@ describe('Builds list page', () => {
     );
 
     const { getByTestId } = render(buildsPage);
-    const buildsList = getByTestId('system-message-settings-unset');
-    expect(buildsList).toBeInTheDocument();
+    const sysMessage = getByTestId('system-message-settings-unset');
+    expect(sysMessage).toBeInTheDocument();
   });
 
-  it('should render Run build button when there are settings in the store', () => {
+  it('should redirect on /settings route on Open settings button click', () => {
     const store = createStore({
       preloadedState: {
-        settings: { repoName: 'repo' },
+        settings: undefined,
       },
     });
+    const history = createMemoryHistory({
+      initialEntries: ['/'],
+      initialIndex: 0,
+    });
+
     const buildsPage = (
       <Router history={history}>
         <Provider store={store}>
-          <App />
+          <Builds loadData={() => {}} />
         </Provider>
       </Router>
     );
 
     const { getByTestId } = render(buildsPage);
-    const buildsList = getByTestId('header-control-run-build');
-    expect(buildsList).toBeInTheDocument();
+    events.click(getByTestId('system-message-settings-btn'));
+
+    expect(history.location.pathname).toBe('/settings');
   });
 
   it('should render system message when there is pending request', () => {
@@ -116,6 +114,11 @@ describe('Builds list page', () => {
         settings: { repoName: 'repo' },
       },
     });
+    const history = createMemoryHistory({
+      initialEntries: ['/'],
+      initialIndex: 0,
+    });
+
     const buildsPage = (
       <Router history={history}>
         <Provider store={store}>

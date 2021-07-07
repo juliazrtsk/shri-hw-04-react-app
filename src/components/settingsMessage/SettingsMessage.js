@@ -24,7 +24,11 @@ const SettingsMessage = () => {
       >
         {l10n.settings_msg_description}
       </p>
-      <Button color="primary" onClick={onClick}>
+      <Button
+        color="primary"
+        onClick={onClick}
+        data-testid="system-message-settings-btn"
+      >
         {l10n.settings_msg_controls_open}
       </Button>
     </SystemMessage>
