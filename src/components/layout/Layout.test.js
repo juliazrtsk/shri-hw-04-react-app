@@ -11,7 +11,7 @@ import Layout from 'components/layout/Layout';
 describe('Layout', () => {
   let history;
 
-  beforeAll(() => {
+  beforeEach(() => {
     history = createMemoryHistory({
       initialEntries: ['/'],
       initialIndex: 0,
@@ -44,7 +44,7 @@ describe('Layout', () => {
 
   it('should not have any buttons in the header at /settings route', () => {
     const store = createStore({});
-    const history = createMemoryHistory({
+    history = createMemoryHistory({
       initialEntries: ['/settings'],
       initialIndex: 0,
     });
@@ -69,10 +69,6 @@ describe('Layout', () => {
         settings: { repoName: 'repo' },
       },
     });
-    const history = createMemoryHistory({
-      initialEntries: ['/'],
-      initialIndex: 0,
-    });
     const layout = (
       <Router history={history}>
         <Provider store={store}>
@@ -95,7 +91,7 @@ describe('Layout', () => {
         settings: { repoName: 'repo' },
       },
     });
-    const history = createMemoryHistory({
+    history = createMemoryHistory({
       initialEntries: ['/build/1'],
       initialIndex: 0,
     });
@@ -120,10 +116,6 @@ describe('Layout', () => {
       preloadedState: {
         settings: undefined,
       },
-    });
-    const history = createMemoryHistory({
-      initialEntries: ['/'],
-      initialIndex: 0,
     });
     const layout = (
       <Router history={history}>
