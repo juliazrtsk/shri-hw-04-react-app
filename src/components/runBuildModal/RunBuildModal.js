@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import Modal from 'components/modal/Modal';
 import Title from 'components/title/Title';
@@ -20,6 +20,7 @@ import './RunBuildModal.css';
 const RunBuildModal = ({ onClose, ...otherProps }) => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
 
   const [hash, setHash] = useState('');
   const [reqError, setReqError] = useState(null);
@@ -39,7 +40,10 @@ const RunBuildModal = ({ onClose, ...otherProps }) => {
     await dispatch(setPending({ loading: false }));
     if (!error) {
       onCloseModal();
-      history.push(paths.build.replace(/:buildId/g, payload.id));
+      history.push({
+        pathname: paths.build.replace(/:buildId/g, payload.id),
+        search: location.search,
+      });
     } else {
       setReqError(payload);
     }
