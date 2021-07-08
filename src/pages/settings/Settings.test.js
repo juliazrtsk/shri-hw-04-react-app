@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { render, waitFor } from '@testing-library/react';
+import events from '@testing-library/user-event';
 
 import Api from 'api/Api';
 import SettingsService from 'api/SettingsService';
@@ -44,5 +45,26 @@ describe('Settings page', () => {
     await waitFor(() =>
       expect(getByTestId('page-settings')).toBeInTheDocument()
     );
+  });
+
+  it('should redirect on / route after click on cancel button', async () => {
+    const store = createStore({
+      settingsService,
+    });
+    mockApi.get.mockReturnValue({ data: {} });
+
+    const settings = (
+      <Router history={history}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </Router>
+    );
+
+    const { getByTestId } = render(settings);
+    await waitFor(() => {
+      events.click(getByTestId('settings-control-cancel'));
+      expect(history.location.pathname).toBe('/');
+    });
   });
 });

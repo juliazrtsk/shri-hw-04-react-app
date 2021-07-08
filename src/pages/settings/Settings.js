@@ -103,7 +103,8 @@ const Settings = ({ loadData }) => {
     });
   }, []);
 
-  const onCancel = useCallback(() => {
+  const onCancel = useCallback((e) => {
+    e.preventDefault();
     history.push(paths.home);
   }, []);
 
@@ -213,13 +214,19 @@ const Settings = ({ loadData }) => {
       <form className="settings__form" onSubmit={onSubmit}>
         {renderedFormFields}
         <section className="settings__controls">
-          <Button type="submit" disabled={pending.loading}>
+          <Button
+            type="submit"
+            disabled={pending.loading}
+            onClick={onSubmit}
+            data-testid="settings-control-save"
+          >
             {l10n.settings_controls_save}
           </Button>
           <Button
             color="secondary"
             onClick={onCancel}
             disabled={pending.loading}
+            data-testid="settings-control-cancel"
           >
             {l10n.settings_controls_cancel}
           </Button>
