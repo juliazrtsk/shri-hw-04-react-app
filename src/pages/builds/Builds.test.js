@@ -2,17 +2,38 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import events from '@testing-library/user-event';
 
 import { createStore } from 'store';
+
+import Api from 'api/Api';
+import SettingsService from 'api/SettingsService';
+import BuildsService from 'api/BuildsService';
 
 import App from 'components/app/App';
 import Builds from './Builds';
 
 describe('Builds list page', () => {
-  const modal = document.createElement('div');
-  modal.setAttribute('id', 'modal');
+  let history, mockApi, settingsService, buildsService, modal;
+
+  beforeAll(() => {
+    modal = document.createElement('div');
+    modal.setAttribute('id', 'modal');
+
+    mockApi = new Api();
+    mockApi.get = jest.fn();
+    mockApi.post = jest.fn();
+    settingsService = new SettingsService(mockApi);
+    buildsService = new BuildsService(mockApi);
+  });
+
+  beforeEach(() => {
+    history = createMemoryHistory({
+      initialEntries: ['/'],
+      initialIndex: 0,
+    });
+  });
 
   it('should render builds list when builds array is in the store', () => {
     const store = createStore({
@@ -67,10 +88,6 @@ describe('Builds list page', () => {
         settings: undefined,
       },
     });
-    const history = createMemoryHistory({
-      initialEntries: ['/'],
-      initialIndex: 0,
-    });
 
     const buildsPage = (
       <Router history={history}>
@@ -114,10 +131,6 @@ describe('Builds list page', () => {
         settings: { repoName: 'repo' },
       },
     });
-    const history = createMemoryHistory({
-      initialEntries: ['/'],
-      initialIndex: 0,
-    });
 
     const buildsPage = (
       <Router history={history}>
@@ -134,5 +147,27 @@ describe('Builds list page', () => {
 
     const modalWindow = getByTestId('modal-run-build');
     expect(modalWindow).toBeInTheDocument();
+  });
+
+  it('should send request for getting settings on open', async () => {
+    const store = createStore({
+      buildsService,
+      settingsService,
+    });
+    const app = (
+      <Provider store={store}>
+        <Router history={history}>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </Router>
+      </Provider>
+    );
+    mockApi.get.mockReturnValue({ data: {} });
+
+    render(app);
+    await waitFor(() =>
+      expect(mockApi.get.mock.calls).toEqual([['/settings'], ['/builds']])
+    );
   });
 });
