@@ -131,11 +131,11 @@ describe('Builds list page', () => {
       buildsService,
     });
     const app = (
-      <Router history={history}>
-        <Provider store={store}>
+      <Provider store={store}>
+        <Router history={history}>
           <App />
-        </Provider>
-      </Router>
+        </Router>
+      </Provider>
     );
     mockApi.get.mockReturnValueOnce({ data: { repoName: 'repo' } });
     mockApi.get.mockReturnValue({ data: [] });
@@ -152,11 +152,11 @@ describe('Builds list page', () => {
     });
 
     const buildsPage = (
-      <Router history={history}>
-        <Provider store={store}>
+      <Provider store={store}>
+        <Router history={history}>
           <App />
-        </Provider>
-      </Router>
+        </Router>
+      </Provider>
     );
 
     const { getByTestId } = render(buildsPage, {
@@ -176,9 +176,7 @@ describe('Builds list page', () => {
     const app = (
       <Provider store={store}>
         <Router history={history}>
-          <Provider store={store}>
-            <App />
-          </Provider>
+          <App />
         </Router>
       </Provider>
     );
