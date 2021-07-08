@@ -121,8 +121,27 @@ describe('Builds list page', () => {
     );
 
     const { getByTestId } = render(buildsPage);
-    const buildsList = getByTestId('system-message-pending');
-    expect(buildsList).toBeInTheDocument();
+    const message = getByTestId('system-message-pending');
+    expect(message).toBeInTheDocument();
+  });
+
+  it('should render Builds page on / route', async () => {
+    const store = createStore({
+      settingsService,
+      buildsService,
+    });
+    const app = (
+      <Router history={history}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </Router>
+    );
+    mockApi.get.mockReturnValueOnce({ data: { repoName: 'repo' } });
+    mockApi.get.mockReturnValue({ data: [] });
+
+    const { getByTestId } = render(app);
+    await waitFor(() => expect(getByTestId('page-builds')).toBeInTheDocument());
   });
 
   it('should show modal window after click on Run build button', () => {
