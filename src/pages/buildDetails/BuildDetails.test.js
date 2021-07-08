@@ -85,7 +85,7 @@ describe('Build details page', () => {
         </Router>
       </Provider>
     );
-    mockApi.get.mockReturnValue({ data: null });
+    mockApi.get.mockReturnValueOnce({ data: null });
     mockApi.get.mockReturnValue(null);
 
     render(app);
@@ -95,5 +95,38 @@ describe('Build details page', () => {
         ['/builds/1/logs'],
       ])
     );
+  });
+
+  it('should render build details card and log if data was fetched successfully', async () => {
+    const store = createStore({
+      buildsService,
+    });
+    const app = (
+      <Provider store={store}>
+        <Router history={history}>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </Router>
+      </Provider>
+    );
+    mockApi.get.mockReturnValueOnce({
+      data: {
+        id: '1',
+        buildNumber: 1,
+        status: 'Waiting',
+        commitMessage: 'Message',
+        branchName: 'master',
+        authorName: 'Author',
+        commitHash: '1q2w3e4r',
+      },
+    });
+    mockApi.get.mockReturnValue('log');
+
+    const { getByTestId } = render(app);
+    await waitFor(() => {
+      expect(getByTestId('build-card')).toBeInTheDocument();
+      expect(getByTestId('build-log')).toBeInTheDocument();
+    });
   });
 });

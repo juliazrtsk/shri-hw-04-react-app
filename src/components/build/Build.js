@@ -47,6 +47,7 @@ const Build = (props) => {
       )}
       key={id}
       onClick={() => handleClick(id)}
+      data-testid="build-card"
     >
       <Icon className="build__status-icon" type={buildStatusMap[status]} />
       <div className="build__status">
