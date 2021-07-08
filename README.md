@@ -29,6 +29,12 @@ $ npm ci && npm run start
 $ npm run build
 ```
 
+Для запуска тестов:
+
+```shell
+$ npm run build
+```
+
 Для извлечения скриптов сборки. Необратимая операция.
 
 ```shell
