@@ -3,12 +3,14 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { render, waitFor } from '@testing-library/react';
+import events from '@testing-library/user-event';
 
 import Api from 'api/Api';
 import BuildsService from 'api/BuildsService';
 import { createStore } from 'store';
 
 import App from 'components/app/App';
+import Layout from 'components/layout/Layout';
 import BuildDetails from './BuildDetails';
 
 describe('Build details page', () => {
@@ -128,5 +130,58 @@ describe('Build details page', () => {
       expect(getByTestId('build-card')).toBeInTheDocument();
       expect(getByTestId('build-log')).toBeInTheDocument();
     });
+  });
+
+  it('should send request on adding build to queue on Rebuild button click', async () => {
+    const store = createStore({
+      buildsService,
+      preloadedState: {
+        build: {
+          details: { commitHash: '1q2w3e4r' },
+        },
+      },
+    });
+
+    const layout = (
+      <Router history={history}>
+        <Provider store={store}>
+          <Layout />
+        </Provider>
+      </Router>
+    );
+
+    const { getByTestId } = render(layout);
+    events.click(getByTestId('header-control-rebuild'));
+
+    await waitFor(() =>
+      expect(mockApi.post.mock.calls).toEqual([['/builds/1q2w3e4r']])
+    );
+  });
+
+  it('should redirect user on new build page after successful rebuild request', async () => {
+    const store = createStore({
+      buildsService,
+      preloadedState: {
+        build: {
+          details: { commitHash: '1q2w3e4r' },
+        },
+      },
+    });
+
+    const layout = (
+      <Router history={history}>
+        <Provider store={store}>
+          <Layout />
+        </Provider>
+      </Router>
+    );
+    mockApi.post.mockReturnValue({ data: { id: 'new-build-id' } });
+
+    const { getByTestId } = render(layout);
+    events.click(getByTestId('header-control-rebuild'));
+
+    await waitFor(() =>
+      expect(history.location.pathname).toBe('/build/new-build-id')
+    );
   });
 });
