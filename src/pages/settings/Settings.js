@@ -82,7 +82,6 @@ const Settings = ({ loadData }) => {
           period: Number.parseInt(period),
         })
       );
-      debugger;
 
       if (!error) {
         history.push(paths.home);

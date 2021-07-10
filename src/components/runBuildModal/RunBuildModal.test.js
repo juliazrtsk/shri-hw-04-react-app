@@ -31,7 +31,7 @@ describe('Run build modal', () => {
     });
 
     const runButton = getByTestId('modal-build-button-run');
-    expect(runButton).toHaveAttribute('disabled');
+    expect(runButton).toBeDisabled();
   });
 
   it('should have all buttons disabled while request is pending', () => {
