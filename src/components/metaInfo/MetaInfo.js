@@ -4,8 +4,12 @@ import cn from 'classnames';
 
 import './MetaInfo.css';
 
-const MetaInfo = ({ className, children }) => {
-  return <div className={cn('meta', className)}>{children}</div>;
+const MetaInfo = ({ className, children, ...otherProps }) => {
+  return (
+    <div className={cn('meta', className)} {...otherProps}>
+      {children}
+    </div>
+  );
 };
 
 MetaInfo.propTypes = {
