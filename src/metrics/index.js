@@ -1,13 +1,25 @@
 import { Counter } from './send';
+import { browserParser } from './browserParser';
 
 let counter = new Counter();
 
-export const ID = '40ca45e5-3504-45c7-b871-d77e1afd5802';
+const pages = {
+  '': 'home',
+  build: 'build',
+  settings: 'settings',
+};
+const matchPage = (location) => pages[location.split('/')[1]] || 'unknown';
 
-counter.init(ID, String(Math.random()).substr(2, 12), 'send test');
+export const ID = '40ca45e5-3504-45c7-b871-d77e1afd5802';
+const sessionID = String(Math.random()).substr(2, 12);
+
+counter.init(ID, sessionID, matchPage(window.location.pathname));
+
 counter.setAdditionalParams({
   env: 'development',
   platform: 'desktop',
+  locale: navigator.language.toLocaleLowerCase(),
+  browser: browserParser(navigator.userAgent),
 });
 
 counter.send(
