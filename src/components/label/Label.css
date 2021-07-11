@@ -7,3 +7,8 @@
   color: var(--color-accent-required);
   margin-left: 2px;
 }
+
+.label_error {
+  color: var(--color-accent-error);
+  font-size: 11px;
+}

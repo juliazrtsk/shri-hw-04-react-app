@@ -1,0 +1,10 @@
+.settings-msg__logo {
+  width: 124px;
+  height: 124px;
+  margin: auto;
+  background: url('./img/settingsLogo.svg');
+}
+
+.settings-msg__description {
+  margin: 32px 0 24px;
+}

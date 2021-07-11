@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import './style.css';
+import './Title.css';
 
 const Title = ({ className, level, children }) => {
   const HComponent = [1, 2, 3].includes(level) ? `h${level}` : 1;

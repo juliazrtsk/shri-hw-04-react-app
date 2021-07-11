@@ -18,7 +18,9 @@
 Чтобы запустить приложение для разработки на [http://localhost:3000](http://localhost:3000):
 
 ```shell
-$ npm i && npm run start
+$ git clone https://github.com/juliazrtsk/shri-hw-04-react-app.git
+$ cp .env.template .env
+$ npm ci && npm run start
 ```
 
 Для сборки проекта:

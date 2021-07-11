@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import './style.css';
+import './CommitHash.css';
 
 const CommitHash = ({ hash }) => {
   const [expanded, setExpanded] = useState(false);

@@ -5,7 +5,7 @@ import Link from 'components/link/Link';
 import Copyright from 'components/copyright/Copyright';
 import l10n from 'l10n/config';
 
-import './style.css';
+import './Footer.css';
 
 const Footer = ({ className }) => {
   return (

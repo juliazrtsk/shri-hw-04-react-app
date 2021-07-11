@@ -7,7 +7,7 @@ import MetaInfo from 'components/metaInfo/MetaInfo';
 import Icon from 'components/icon/Icon';
 import CommitHash from 'components/commitHash/CommitHash';
 
-import './style.css';
+import './Build.css';
 
 const buildStatusMap = {
   Success: 'correct',
@@ -31,9 +31,9 @@ const Build = (props) => {
     view,
   } = props;
 
-  const handleClick = (build) => {
+  const handleClick = (id) => {
     if (onClick) {
-      onClick(build);
+      onClick(id);
     }
   };
 
@@ -46,7 +46,7 @@ const Build = (props) => {
         className
       )}
       key={id}
-      onClick={() => handleClick(buildNumber)}
+      onClick={() => handleClick(id)}
     >
       <Icon className="build__status-icon" type={buildStatusMap[status]} />
       <div className="build__status">

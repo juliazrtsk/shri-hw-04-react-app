@@ -1,22 +1,21 @@
-import React, { useReducer, useCallback, useMemo } from 'react';
-import cn from 'classnames';
+import React, { useReducer, useCallback, useMemo, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import cn from 'classnames';
 
 import Title from 'components/title/Title';
 import Label from 'components/label/Label';
 import Input from 'components/input/Input';
 import Button from 'components/button/Button';
+import PendingMessage from 'components/pendingMessage/PendingMessage';
 import l10n from 'l10n/config';
-import routes from 'src/routes';
+import { paths } from 'router';
+
+import { pendingSelector, setPending } from 'store/layoutSlice';
+import { settingsSelector, updateSettings } from 'store/settingsSlice';
 
 import './style.css';
-
-const initialState = {
-  repo: '',
-  build: '',
-  branch: '',
-  interval: '',
-};
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -25,64 +24,131 @@ const reducer = (state, action) => {
         ...state,
         [action.field]: action.value,
       };
+    case 'UPDATE_FULL_FORM':
+      return {
+        ...state,
+        ...action.settings,
+      };
+    case 'SET_ERROR':
+      return {
+        ...state,
+        error: action.error,
+      };
     default:
       return state;
   }
 };
 
-const Settings = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+const Settings = ({ loadData }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const pending = useSelector(pendingSelector);
+  const settings = useSelector(settingsSelector);
+
+  const [formState, dispatchFormUpdate] = useReducer(reducer, settings);
+
+  useEffect(() => {
+    loadData(dispatch);
+  }, [dispatch, loadData]);
+
+  useEffect(() => {
+    if (Object.keys(settings).length) {
+      dispatchFormUpdate({
+        type: 'UPDATE_FULL_FORM',
+        settings,
+      });
+    }
+  }, [settings]);
 
   const onFieldChange = useCallback(({ target }) => {
-    dispatch({ type: 'UPDATE_FIELD', field: target.name, value: target.value });
+    dispatchFormUpdate({
+      type: 'UPDATE_FIELD',
+      field: target.name,
+      value: target.value,
+    });
   }, []);
 
-  const onSubmit = useCallback((e) => {
-    e.preventDefault();
-    history.push(routes.home);
+  const onSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      const { repoName, buildCommand, mainBranch, period } = formState;
+      await dispatch(setPending({ loading: true, fullscreen: false }));
+      const { error, payload } = await dispatch(
+        updateSettings({
+          repoName,
+          buildCommand,
+          mainBranch,
+          period: Number.parseInt(period),
+        })
+      );
+
+      if (!error) {
+        history.push(paths.home);
+      } else {
+        dispatchFormUpdate({
+          type: 'SET_ERROR',
+          error: payload.message,
+        });
+      }
+      await dispatch(setPending({ loading: false }));
+    },
+    [formState, updateSettings]
+  );
+
+  const resetError = useCallback(() => {
+    dispatchFormUpdate({
+      type: 'SET_ERROR',
+      error: null,
+    });
   }, []);
 
   const onCancel = useCallback(() => {
-    history.push(routes.home);
+    history.push(paths.home);
   }, []);
 
   const formFields = [
     {
-      name: 'repo',
+      name: 'repoName',
       id: 'settings-input-repo',
-      value: state.repo,
+      value: formState.repoName,
       label: l10n.settings_form_repo_label,
       placeholder: l10n.settings_form_repo_placeholder,
       isRequired: true,
-      clearable: true,
+      onFocus: resetError,
+      onBlur: resetError,
     },
     {
-      name: 'build',
+      name: 'buildCommand',
       id: 'settings-input-build',
-      value: state.build,
+      value: formState.buildCommand,
       label: l10n.settings_form_build_label,
       placeholder: l10n.settings_form_build_placeholder,
       isRequired: true,
-      clearable: true,
+      onFocus: resetError,
+      onBlur: resetError,
     },
     {
-      name: 'branch',
+      name: 'mainBranch',
       id: 'settings-input-branch',
-      value: state.branch,
+      value: formState.mainBranch,
       label: l10n.settings_form_branch_label,
       placeholder: l10n.settings_form_branch_placeholder,
       isRequired: true,
-      clearable: true,
+      onFocus: resetError,
+      onBlur: resetError,
     },
     {
-      name: 'interval',
-      id: 'settings-input-interval',
-      value: state.interval,
-      label: l10n.settings_form_interval_label,
-      labelAfterField: l10n.settings_form_interval_label_after,
-      placeholder: l10n.settings_form_interval_placeholder,
+      name: 'period',
+      id: 'settings-input-period',
+      value: formState.period,
+      label: l10n.settings_form_period_label,
+      labelAfterField: l10n.settings_form_period_label_after,
+      placeholder: l10n.settings_form_period_placeholder,
       isRequired: false,
+      onFocus: resetError,
+      onBlur: resetError,
+      mask: [/\d/, /\d/, /\d/],
       // eslint-disable-next-line react/display-name
       render: (field) => {
         const {
@@ -136,6 +202,10 @@ const Settings = () => {
     [formFields]
   );
 
+  if (pending.loading && pending.fullscreen) {
+    return <PendingMessage />;
+  }
+
   return (
     <div className={cn('settings')}>
       <Title level={3}>{l10n.settings_title}</Title>
@@ -143,18 +213,29 @@ const Settings = () => {
       <form className="settings__form" onSubmit={onSubmit}>
         {renderedFormFields}
         <section className="settings__controls">
-          <Button type="submit">{l10n.settings_controls_save}</Button>
-          <Button color="secondary" onClick={onCancel}>
+          <Button type="submit" disabled={pending.loading}>
+            {l10n.settings_controls_save}
+          </Button>
+          <Button
+            color="secondary"
+            onClick={onCancel}
+            disabled={pending.loading}
+          >
             {l10n.settings_controls_cancel}
           </Button>
         </section>
+        {formState.error && <Label error>{formState.error}</Label>}
       </form>
     </div>
   );
 };
 
-Settings.propTypes = {};
+Settings.propTypes = {
+  loadData: PropTypes.func,
+};
 
-Settings.defaultProps = {};
+Settings.defaultProps = {
+  loadData: () => {},
+};
 
 export default Settings;

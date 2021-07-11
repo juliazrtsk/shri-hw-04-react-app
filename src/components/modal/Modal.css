@@ -1,0 +1,30 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+}
+
+.modal__window {
+  z-index: 20;
+  position: relative;
+  top: 35vh;
+  width: 485px;
+  padding: 20px;
+  margin: 0 auto;
+
+  box-shadow: 0 0 1px rgba(67, 68, 69, 0.3), 0 6px 16px rgba(67, 68, 69, 0.3);
+  border-radius: 4px;
+  background-color: var(--color-bg-base);
+  font-size: 13px;
+}
+
+.modal__backdrop {
+  position: fixed;
+  top: 0;
+  height: inherit;
+  width: inherit;
+  background-color: #00000073;
+}

@@ -5,7 +5,7 @@ import cn from 'classnames';
 import Button from 'components/button/Button';
 import Icon from 'components/icon/Icon';
 
-import './style.css';
+import './ActionButton.css';
 
 const ActionButton = (props) => {
   const { className, children, type, onClick } = props;

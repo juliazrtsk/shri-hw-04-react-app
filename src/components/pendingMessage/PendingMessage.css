@@ -1,0 +1,12 @@
+.pending-msg__logo {
+  width: 124px;
+  height: 124px;
+  margin: auto;
+  background: url('./img/pendingLogo.svg') no-repeat center;
+  background-size: 100% 100%;
+  opacity: 0.1;
+}
+
+.pending-msg__description {
+  margin: 32px 0 24px;
+}

@@ -1,26 +1,51 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Build from 'components/build/Build';
 import BuildLog from 'components/buildLog/BuildLog';
+import PendingMessage from 'components/pendingMessage/PendingMessage';
 
-/* mockdata */
-import { log } from 'api/buildLog';
-import { builds } from 'api/buildsList';
+import { pendingSelector } from 'store/layoutSlice';
+import { buildDetailsSelector, buildLogSelector } from 'store/buildSlice';
 
 import './style.css';
 
-const BuildDetails = () => {
-  let { buildNumber } = useParams();
-  buildNumber = Number.parseInt(buildNumber);
+const BuildDetails = ({ loadData }) => {
+  const dispatch = useDispatch();
 
-  const build = builds.filter(({ buildNumber: n }) => n === buildNumber)[0];
+  const { buildId } = useParams();
+  const pending = useSelector(pendingSelector);
+  const build = useSelector(buildDetailsSelector);
+  const log = useSelector(buildLogSelector);
+
+  useEffect(() => {
+    loadData(dispatch, buildId);
+  }, [dispatch, loadData, buildId]);
+
+  if (pending.loading) {
+    return <PendingMessage />;
+  }
+
   return (
     <article className="build-details">
-      <Build {...build} view="expanded" />
-      <BuildLog className="build-details__log" log={log} />
+      {build && log !== null && (
+        <>
+          <Build {...build} view="expanded" />
+          <BuildLog className="build-details__log" log={log} />
+        </>
+      )}
     </article>
   );
+};
+
+BuildDetails.propTypes = {
+  loadData: PropTypes.func,
+};
+
+BuildDetails.defaultProps = {
+  loadData: () => {},
 };
 
 export default BuildDetails;
