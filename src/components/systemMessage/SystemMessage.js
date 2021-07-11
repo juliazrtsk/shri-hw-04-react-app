@@ -5,7 +5,7 @@ import './SystemMessage.css';
 
 const SystemMessage = ({ children }) => {
   return (
-    <div className="system-msg">
+    <div className="system-msg" data-testid="system-message">
       <div className="system-msg__message">{children}</div>
     </div>
   );

@@ -19,6 +19,7 @@ const BuildLog = ({ log, className }) => {
         boxSizing: 'border-box',
       }}
       codeTagProps={{ style: { fontFamily: 'Hack, monospace' } }}
+      data-testid="build-log"
     >
       {log}
     </SyntaxHighlighter>

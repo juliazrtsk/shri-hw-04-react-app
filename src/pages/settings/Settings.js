@@ -15,7 +15,7 @@ import { paths } from 'router';
 import { pendingSelector, setPending } from 'store/layoutSlice';
 import { settingsSelector, updateSettings } from 'store/settingsSlice';
 
-import './style.css';
+import './Settings.css';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -103,7 +103,8 @@ const Settings = ({ loadData }) => {
     });
   }, []);
 
-  const onCancel = useCallback(() => {
+  const onCancel = useCallback((e) => {
+    e.preventDefault();
     history.push(paths.home);
   }, []);
 
@@ -111,6 +112,7 @@ const Settings = ({ loadData }) => {
     {
       name: 'repoName',
       id: 'settings-input-repo',
+      'data-testid': 'settings-input-repo',
       value: formState.repoName,
       label: l10n.settings_form_repo_label,
       placeholder: l10n.settings_form_repo_placeholder,
@@ -121,6 +123,7 @@ const Settings = ({ loadData }) => {
     {
       name: 'buildCommand',
       id: 'settings-input-build',
+      'data-testid': 'settings-input-build',
       value: formState.buildCommand,
       label: l10n.settings_form_build_label,
       placeholder: l10n.settings_form_build_placeholder,
@@ -131,6 +134,7 @@ const Settings = ({ loadData }) => {
     {
       name: 'mainBranch',
       id: 'settings-input-branch',
+      'data-testid': 'settings-input-branch',
       value: formState.mainBranch,
       label: l10n.settings_form_branch_label,
       placeholder: l10n.settings_form_branch_placeholder,
@@ -141,6 +145,7 @@ const Settings = ({ loadData }) => {
     {
       name: 'period',
       id: 'settings-input-period',
+      'data-testid': 'settings-input-period',
       value: formState.period,
       label: l10n.settings_form_period_label,
       labelAfterField: l10n.settings_form_period_label_after,
@@ -207,19 +212,24 @@ const Settings = ({ loadData }) => {
   }
 
   return (
-    <div className={cn('settings')}>
+    <div className={cn('settings')} data-testid="page-settings">
       <Title level={3}>{l10n.settings_title}</Title>
       <p className="settings__description">{l10n.settings_description}</p>
       <form className="settings__form" onSubmit={onSubmit}>
         {renderedFormFields}
         <section className="settings__controls">
-          <Button type="submit" disabled={pending.loading}>
+          <Button
+            type="submit"
+            disabled={pending.loading}
+            data-testid="settings-control-save"
+          >
             {l10n.settings_controls_save}
           </Button>
           <Button
             color="secondary"
             onClick={onCancel}
             disabled={pending.loading}
+            data-testid="settings-control-cancel"
           >
             {l10n.settings_controls_cancel}
           </Button>

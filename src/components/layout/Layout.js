@@ -52,16 +52,27 @@ const Layout = ({ children }) => {
         text: 'Run build',
         onClick: handleToggleModal,
         invisible: !(settings && settings.repoName),
+        testId: 'header-control-run-build',
       },
       {
         type: 'settings',
         onClick: () => redirect(paths.settings),
+        testId: 'header-control-settings',
       },
     ],
     [paths.settings]: [],
     [paths.build]: [
-      { type: 'restart', text: 'Rebuild', onClick: rebuild },
-      { type: 'settings', onClick: () => redirect(paths.settings) },
+      {
+        type: 'restart',
+        text: 'Rebuild',
+        onClick: rebuild,
+        testId: 'header-control-rebuild',
+      },
+      {
+        type: 'settings',
+        onClick: () => redirect(paths.settings),
+        testId: 'header-control-settings',
+      },
     ],
   };
 
@@ -70,12 +81,13 @@ const Layout = ({ children }) => {
 
   const renderControls = () =>
     controls[path].map(
-      ({ type, text, onClick, invisible }) =>
+      ({ type, text, onClick, invisible, testId }) =>
         !invisible && (
           <ActionButton
             key={`layout_control_${type}`}
             type={type}
             onClick={onClick}
+            testId={testId}
           >
             {text}
           </ActionButton>
@@ -88,7 +100,9 @@ const Layout = ({ children }) => {
     <div className="layout">
       <Header>
         <Title className="layout__title">{l10n.layout_header_title}</Title>
-        <div className="layout__controls">{renderControls()}</div>
+        <div className="layout__controls" data-testid="layout-controls">
+          {renderControls()}
+        </div>
       </Header>
       <main className="layout__content">{content}</main>
       <Footer />

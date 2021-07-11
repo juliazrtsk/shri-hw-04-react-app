@@ -9,7 +9,10 @@ const NetworkErrorMessage = () => {
   return (
     <SystemMessage className="network-err-msg">
       <div className="network-err-msg__logo" />
-      <p className="network-err-msg__description">
+      <p
+        className="network-err-msg__description"
+        data-testid="system-message-error"
+      >
         {l10n.network_err_msg_description}
       </p>
     </SystemMessage>

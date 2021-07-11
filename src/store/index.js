@@ -13,6 +13,7 @@ export const createStore = (options) =>
       settings: settingsReducer,
       layout: layoutReducer,
     },
+    preloadedState: options.preloadedState,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         thunk: {

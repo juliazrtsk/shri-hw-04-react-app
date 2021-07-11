@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import './CommitHash.css';
 
-const CommitHash = ({ hash }) => {
+const CommitHash = ({ hash, ...otherProps }) => {
   const [expanded, setExpanded] = useState(false);
 
   const onClick = useCallback(
@@ -22,6 +22,7 @@ const CommitHash = ({ hash }) => {
         'commit-hash_short': hash.length <= 10,
       })}
       onClick={onClick}
+      {...otherProps}
     >
       {hash}
     </div>

@@ -47,22 +47,29 @@ const Build = (props) => {
       )}
       key={id}
       onClick={() => handleClick(id)}
+      data-testid="build-card"
     >
       <Icon className="build__status-icon" type={buildStatusMap[status]} />
       <div className="build__status">
-        <span className="build__number">#{buildNumber}</span> {commitMessage}
+        <span className="build__number" data-testid="build-card_number">
+          #{buildNumber}
+        </span>{' '}
+        {commitMessage}
       </div>
 
       {(start || duration) && (
         <div className="build__date-time-meta">
           {start && (
-            <MetaInfo className="build__date">
+            <MetaInfo className="build__date" data-testid="build-card_date">
               <Icon type="calendar" color="secondary" />{' '}
               {dayjs(start).format('DD MMM, hh:mm')}
             </MetaInfo>
           )}
           {duration && (
-            <MetaInfo className="build__duration">
+            <MetaInfo
+              className="build__duration"
+              data-testid="build-card_duration"
+            >
               <Icon type="stopwatch" color="secondary" /> {duration}
             </MetaInfo>
           )}
@@ -70,11 +77,11 @@ const Build = (props) => {
       )}
 
       <div className="build__commit-meta">
-        <MetaInfo>
+        <MetaInfo data-testid="build-card_branch">
           <Icon type="commit" color="secondary" /> {branchName}
         </MetaInfo>
-        <CommitHash hash={commitHash} />
-        <MetaInfo>
+        <CommitHash hash={commitHash} data-testid="build-card_hash" />
+        <MetaInfo data-testid="build-card_author">
           <Icon type="user" color="secondary" /> {authorName}
         </MetaInfo>
       </div>
