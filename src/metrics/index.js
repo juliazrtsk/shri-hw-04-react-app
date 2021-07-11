@@ -30,3 +30,10 @@ counter.send(
   'ttfb',
   performance.timing.responseEnd - performance.timing.requestStart
 );
+
+new PerformanceObserver((entryList) => {
+  for (const entry of entryList.getEntries()) {
+    const delay = entry.processingStart - entry.startTime;
+    counter.send('fid', delay);
+  }
+}).observe({ type: 'first-input', buffered: true });

@@ -80,6 +80,7 @@ src
 
 - Connect
 - Time to first byte
+- First input delay
 
 ### Срезы
 
