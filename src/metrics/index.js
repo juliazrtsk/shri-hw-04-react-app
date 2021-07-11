@@ -37,3 +37,9 @@ new PerformanceObserver((entryList) => {
     counter.send('fid', delay);
   }
 }).observe({ type: 'first-input', buffered: true });
+
+new PerformanceObserver((entryList) => {
+  for (const entry of entryList.getEntries()) {
+    counter.send('lcp', entry.startTime);
+  }
+}).observe({ type: 'largest-contentful-paint', buffered: true });
