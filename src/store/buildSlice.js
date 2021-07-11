@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { sendMetricEvent } from 'metrics';
 
 const initialState = {
   details: null,
@@ -21,8 +22,12 @@ export const getBuildLogs = createAsyncThunk(
   'build/get-logs',
   async (buildId, { rejectWithValue, extra: { buildsService } }) => {
     try {
-      return await buildsService.getBuildLogs(buildId);
+      sendMetricEvent('getLogs', 'start');
+      const result = await buildsService.getBuildLogs(buildId);
+      sendMetricEvent('getLogs', 'end');
+      return result;
     } catch (e) {
+      sendMetricEvent('getLogs', 'end');
       return rejectWithValue(e.response.message);
     }
   }
