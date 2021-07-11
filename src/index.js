@@ -8,6 +8,8 @@ import App from 'components/app/App';
 import { createStore } from 'store';
 import { buildsService, settingsService } from 'api';
 
+import 'metrics';
+
 import './_variables.css';
 import './index.css';
 
