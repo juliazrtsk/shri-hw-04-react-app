@@ -79,8 +79,9 @@ const Layout = ({ children }) => {
   const match = matchLocationToPath(location.pathname);
   const path = match ? match.path : paths.home;
 
-  const renderControls = () =>
-    controls[path].map(
+  const renderControls = () => {
+    const controlsToRender = controls[path] || [];
+    return controlsToRender.map(
       ({ type, text, onClick, invisible, testId }) =>
         !invisible && (
           <ActionButton
@@ -93,6 +94,7 @@ const Layout = ({ children }) => {
           </ActionButton>
         )
     );
+  };
 
   const content = networkError ? <NetworkErrorMessage /> : children;
 

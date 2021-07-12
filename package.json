@@ -48,6 +48,7 @@
     "components": "./src/components",
     "pages": "./src/pages",
     "l10n": "./src/localization",
+    "metrics": "./src/metrics",
     "router": "./src/router",
     "store": "./src/store",
     "utils": "./src/utils"

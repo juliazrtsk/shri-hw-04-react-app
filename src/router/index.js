@@ -3,6 +3,7 @@ import { matchPath } from 'react-router-dom';
 import Settings from 'pages/settings/Settings';
 import Builds from 'pages/builds/Builds';
 import BuildDetails from 'pages/buildDetails/BuildDetails';
+import Metrics from 'pages/metrics/Metrics';
 
 import { getSettings } from 'store/settingsSlice';
 import { getBuilds } from 'store/buildsSlice';
@@ -13,9 +14,14 @@ export const paths = {
   home: '/',
   settings: '/settings',
   build: '/build/:buildId',
+  metrics: '/metrics',
 };
 
 export const routes = [
+  {
+    path: paths.metrics,
+    component: Metrics,
+  },
   {
     path: paths.build,
     component: BuildDetails,
