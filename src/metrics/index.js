@@ -49,7 +49,7 @@ new PerformanceObserver((entryList) => {
 }).observe({ type: 'first-input', buffered: true });
 
 new PerformanceObserver((entryList) => {
-  for (const entry of entryList.getEntries()) {
-    counter.send('lcp', entry.startTime);
+  for (const entry of entryList.getEntriesByName('first-contentful-paint')) {
+    counter.send('fcp', entry.startTime);
   }
-}).observe({ type: 'largest-contentful-paint', buffered: true });
+}).observe({ type: 'paint', buffered: true });

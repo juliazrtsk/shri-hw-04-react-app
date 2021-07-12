@@ -1,4 +1,4 @@
-const matchBrowser = (agent, browser) => agent.indexOf(browser) > -1;
+const matchBrowser = (agent, browser) => agent.includes(browser);
 
 export const browserParser = (agent) => {
   if (matchBrowser(agent, 'Firefox')) {
