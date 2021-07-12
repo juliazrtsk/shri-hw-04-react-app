@@ -174,9 +174,9 @@ fetch(`https://shri.yandex/hw/stat/data?counterId=${ID}`)
     console.groupEnd();
 
     console.group(
-      'Срез по параметру browser для метрики fid на странице settings'
+      'Срез по параметру browser для метрики ttfb на странице settings'
     );
-    compareAggMetric(agData, 'settings', 'fid', 'browser');
+    compareAggMetric(agData, 'settings', 'ttfb', 'browser');
     console.groupEnd();
 
     console.groupEnd();
