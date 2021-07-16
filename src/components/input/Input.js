@@ -14,20 +14,18 @@ const Input = (props) => {
   }, [mask]);
 
   return (
-    <>
-      <MaskedInput
-        className={cn(
-          'input',
-          {
-            input_error: error,
-          },
-          className
-        )}
-        mask={masking}
-        guide={false}
-        {...otherProps}
-      />
-    </>
+    <MaskedInput
+      className={cn(
+        'input',
+        {
+          input_error: error,
+        },
+        className
+      )}
+      mask={masking}
+      guide={false}
+      {...otherProps}
+    />
   );
 };
 

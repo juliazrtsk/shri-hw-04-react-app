@@ -13,6 +13,8 @@ const buildStatusMap = {
   Success: 'correct',
   Waiting: 'pending',
   Canceled: 'error',
+  InProgress: 'pending',
+  Fail: 'error',
 };
 
 const Build = (props) => {
@@ -49,8 +51,11 @@ const Build = (props) => {
       onClick={() => handleClick(id)}
     >
       <Icon className="build__status-icon" type={buildStatusMap[status]} />
-      <div className="build__status">
-        <span className="build__number">#{buildNumber}</span> {commitMessage}
+      <div className="build__status" title={status}>
+        <span className="build__number" data-testid="build-card_number">
+          #{buildNumber}
+        </span>{' '}
+        {commitMessage}
       </div>
 
       {(start || duration) && (
@@ -85,7 +90,13 @@ const Build = (props) => {
 Build.propTypes = {
   className: PropTypes.string,
   id: PropTypes.string.isRequired,
-  status: PropTypes.oneOf(['Success', 'Waiting', 'Canceled']).isRequired,
+  status: PropTypes.oneOf([
+    'Success',
+    'Waiting',
+    'Canceled',
+    'InProgress',
+    'Fail',
+  ]).isRequired,
   buildNumber: PropTypes.number.isRequired,
   commitMessage: PropTypes.string.isRequired,
   branchName: PropTypes.string.isRequired,

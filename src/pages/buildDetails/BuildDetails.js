@@ -29,13 +29,9 @@ const BuildDetails = ({ loadData }) => {
   }
 
   return (
-    <article className="build-details">
-      {build && log !== null && (
-        <>
-          <Build {...build} view="expanded" />
-          <BuildLog className="build-details__log" log={log} />
-        </>
-      )}
+    <article className="build-details" data-testid="page-build-details">
+      {build && <Build {...build} view="expanded" />}
+      {log && <BuildLog className="build-details__log" log={log} />}
     </article>
   );
 };
