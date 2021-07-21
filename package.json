@@ -26,12 +26,15 @@
     "typescript": "^4.3.5"
   },
   "devDependencies": {
+    "@types/react-syntax-highlighter": "^13.5.2",
+    "@types/react-text-mask": "^5.4.8",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
     "eslint": "^7.28.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "husky": "^6.0.0",
-    "link-module-alias": "^1.2.0",
     "lint-staged": "^11.0.0",
     "prettier": "^2.3.1"
   },
@@ -39,18 +42,7 @@
     "prepare": "husky install",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "eject": "react-scripts eject",
-    "postinstall": "link-module-alias"
-  },
-  "_moduleAliases": {
-    "src": "./src",
-    "api": "./src/api",
-    "components": "./src/components",
-    "pages": "./src/pages",
-    "l10n": "./src/localization",
-    "router": "./src/router",
-    "store": "./src/store",
-    "utils": "./src/utils"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

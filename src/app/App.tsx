@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { routes, paths } from 'router';
 import Layout from 'components/layout/Layout';
 
-const App = () => (
+const App: React.FC = () => (
   <Layout>
     <Switch>
       {routes.map((route) => (
