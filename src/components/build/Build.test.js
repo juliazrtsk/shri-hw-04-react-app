@@ -2,21 +2,19 @@ import React from 'react';
 import Build from 'components/build/Build';
 import { render } from '@testing-library/react';
 
-describe('Build details card', () => {
-  let baseBuild;
-  beforeAll(() => {
-    baseBuild = {
-      id: '1',
-      buildNumber: 1,
-      commitMessage: 'Message',
-      branchName: 'master',
-      authorName: 'Author',
-      commitHash: '1q2w3e4r',
-    };
-  });
+const getBuild = (replace) => ({
+  id: '1',
+  buildNumber: 1,
+  commitMessage: 'Message',
+  branchName: 'master',
+  authorName: 'Author',
+  commitHash: '1q2w3e4r',
+  ...replace,
+});
 
+describe('Build details card', () => {
   it('contains all necessary fields for Waiting status', () => {
-    const buildData = { ...baseBuild, status: 'Waiting' };
+    const buildData = getBuild({ status: 'Waiting' });
     const build = <Build {...buildData} />;
     const { getByTestId } = render(build);
 
@@ -27,11 +25,10 @@ describe('Build details card', () => {
   });
 
   it('contains start date field for Canceled status', () => {
-    const buildData = {
-      ...baseBuild,
+    const buildData = getBuild({
       status: 'Canceled',
       start: '2021-06-14T20:47:01.076',
-    };
+    });
     const build = <Build {...buildData} />;
     const { getByTestId } = render(build);
 
@@ -39,12 +36,11 @@ describe('Build details card', () => {
   });
 
   it('contains start date and duration fields for Success status', () => {
-    const buildData = {
-      ...baseBuild,
+    const buildData = getBuild({
       status: 'Canceled',
       start: '2021-06-14T20:47:01.076',
       duration: 1000,
-    };
+    });
     const build = <Build {...buildData} />;
     const { getByTestId } = render(build);
 
